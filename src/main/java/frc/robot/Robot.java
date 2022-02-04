@@ -52,7 +52,7 @@ public class Robot extends TimedRobot {
   DriveTrain driveTrain;
   BallManipulator ballControl;
   Camera camera;
-  ColorSensor color;
+  //ColorSensor color;
   ControlSwitch controlSwitch;
   Ultrasonic ultrasonic;
 
@@ -70,8 +70,8 @@ public class Robot extends TimedRobot {
 
     camera = new Camera();
     ultrasonic = new Ultrasonic(ConfigurationService.ULTRASONIC_PORT);
-    color = new ColorSensor(i2cPort);
-    controlSwitch = new ControlSwitch(color);
+    //color = new ColorSensor(i2cPort);
+    //controlSwitch = new ControlSwitch(color);
 
     driveTrain = new DriveTrain();
     ballControl = new BallManipulator();
@@ -167,7 +167,7 @@ public class Robot extends TimedRobot {
     {
       controlSwitch.updateColorChar(DriverStation.getGameSpecificMessage().charAt(0));
     }    
-    color.updateColor();
+    //color.updateColor();
 
     driver.teleop();
     secondary.teleop();
@@ -192,7 +192,7 @@ public class Robot extends TimedRobot {
 	public void disabledPeriodic()
 	{
     driveTrain.drivePercentageOutput(0, 0);
-    if (color != null){
+    //if (color != null){
      /*
       double red = color.r/color.counter;
       double green = color.g/color.counter;
@@ -200,7 +200,7 @@ public class Robot extends TimedRobot {
   
       System.out.println("Average color: " + red + ", " + green + ", " + blue);
     */
-    }
+    //}
 	}
 }
 //heeeeeeeeeeeeeeeeey
