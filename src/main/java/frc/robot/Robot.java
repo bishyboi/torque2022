@@ -166,7 +166,8 @@ public class Robot extends TimedRobot {
     if(DriverStation.getGameSpecificMessage().length() > 0)
     {
       controlSwitch.updateColorChar(DriverStation.getGameSpecificMessage().charAt(0));
-    }    
+    }   
+  
     //color.updateColor();
 
     driver.teleop();
