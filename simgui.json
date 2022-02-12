@@ -1,0 +1,15 @@
+{
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/LiveWindow/Ungrouped/PIDController[1]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[2]": "PIDController",
+      "/LiveWindow/Ungrouped/Talon SRX [0]": "Motor Controller",
+      "/LiveWindow/Ungrouped/Talon SRX [13]": "Motor Controller",
+      "/LiveWindow/Ungrouped/Talon SRX [14]": "Motor Controller",
+      "/LiveWindow/Ungrouped/Talon SRX [3]": "Motor Controller",
+      "/LiveWindow/Ungrouped/Talon SRX [4]": "Motor Controller",
+      "/SmartDashboard/Auto Paths": "String Chooser"
+    }
+  }
+}
