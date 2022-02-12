@@ -20,8 +20,9 @@ public class ConfigurationService
     public static final int ULTRASONIC_PORT           = 0; 
 
     //Misc.
-
+    
     //GAMEPAD REFERENCES
+    //DO NOT EDIT THIS CODE!!!
     public static final double JOYSTICK_DEADZONE      = 0.1;
     
     public static final int LEFT_X_AXIS		          = 0;

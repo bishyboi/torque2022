@@ -21,7 +21,8 @@ public class DriverTask
     private final DriveTrain driveTrain;
     private Camera camera;
 
-    private final int maxVoltage = 10; //probably needs tuning
+    // TODO: ABSOLUTELY NEEDS TUNING
+    private final int maxVoltage = 10; 
     
     Clock clock;
     private final long lockoutPeriod = 500;//in milliseconds 0.001s
