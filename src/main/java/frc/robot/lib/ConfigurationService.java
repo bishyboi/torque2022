@@ -13,11 +13,8 @@ public class ConfigurationService
     public static final int DRIVETRAIN_LEFT_SLAVE     = 0;
     public static final int DRIVETRAIN_RIGHT_MASTER   = 2;
     public static final int DRIVETRAIN_RIGHT_SLAVE    = 3;
-    public static final int COMBINE                   = 0; //TODO: put values for these
-    public static final int SHOOTER                   = 0; //^^^
-    public static final int CONTROLPANEL              = 0; //^^^
-    public static final int ELEVATOR                  = 0; //^^^
-    public static final int CLIMBER                   = 0; //^^^
+    public static final int Tester                    = 0;
+    
 
     //Sensors
     public static final int ULTRASONIC_PORT           = 0; 
