@@ -1,5 +1,6 @@
 // package frc.robot.game2020.tasks;
 
+<<<<<<< HEAD
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import frc.robot.lib.ConfigurationService;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -12,6 +13,20 @@ import frc.robot.lib.components.Camera;
 import frc.robot.lib.tools.Ultrasonic;
 import edu.wpi.first.wpilibj.Timer;
 import java.time.Clock;
+=======
+// import com.ctre.phoenix.motorcontrol.ControlMode;
+// import frc.robot.lib.ConfigurationService;
+// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+// import edu.wpi.first.networktables.*;
+// import frc.robot.lib.components.Xbox;
+// import frc.robot.lib.components.Camera;
+// import frc.robot.game2020.modules.BallManipulator;
+// import frc.robot.game2020.modules.Climber;
+// import frc.robot.game2020.modules.ControlSwitch;
+// import frc.robot.lib.tools.Ultrasonic;
+// import edu.wpi.first.wpilibj.Timer;
+// import java.time.Clock;
+>>>>>>> c30156c6f18ea64f989983d89bfa5877e5ccec67
 
 // public class SecondaryTask
 // {

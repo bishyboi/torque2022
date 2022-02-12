@@ -9,10 +9,17 @@ public class ConfigurationService
 {
    
     //TALON/VICTOR PORT INTEGERS
+<<<<<<< HEAD
     public static final int DRIVETRAIN_LEFT_MASTER    = 1; //technically all of these are subject to change, tuning soon
     public static final int DRIVETRAIN_LEFT_SLAVE     = 0;
     public static final int DRIVETRAIN_RIGHT_MASTER   = 2;
     public static final int DRIVETRAIN_RIGHT_SLAVE    = 3;
+=======
+    public static final int DRIVETRAIN_LEFT_MASTER    = 13; //technically all of these are subject to change, tuning soon
+    public static final int DRIVETRAIN_LEFT_SLAVE     = 14;
+    public static final int DRIVETRAIN_RIGHT_MASTER   = 3;
+    public static final int DRIVETRAIN_RIGHT_SLAVE    = 4;
+>>>>>>> c30156c6f18ea64f989983d89bfa5877e5ccec67
     public static final int Tester                    = 0;
     
 
