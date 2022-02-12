@@ -25,17 +25,17 @@ import frc.robot.lib.tools.ColorSensor;
 import frc.robot.lib.tools.Ultrasonic;
 import frc.robot.game2022.tasks.Motortest;
 
-public class Robot extends TimedRobot {
-  public Robot(){
-    // lib/ConfigurationService.java has motor port numbers
-    Motortest motorTest = new Motortest(ConfigurationService.Tester); // test motor connected to port 0
-  }
-}
-import frc.robot.game2020.modules.BallManipulator;
-import frc.robot.game2020.modules.ControlSwitch;
-import frc.robot.game2020.tasks.AutoTask;
-import frc.robot.game2020.tasks.DriverTask;
-import frc.robot.game2020.tasks.SecondaryTask;
+import frc.robot.game2022.tasks.AutoTask;
+import frc.robot.game2022.tasks.DriverTask;
+import frc.robot.game2022.tasks.SecondaryTask;
+
+// public class Robot extends TimedRobot {
+//   public Robot(){
+//     // lib/ConfigurationService.java has motor port numbers
+//     Motortest motorTest = new Motortest(ConfigurationService.Tester); // test motor connected to port 0
+//   }
+// }
+
 
 
 
@@ -58,10 +58,7 @@ public class Robot extends TimedRobot {
   SecondaryTask secondary;
   AutoTask auto;
   DriveTrain driveTrain;
-  BallManipulator ballControl;
   Camera camera;
-  //ColorSensor color;
-  ControlSwitch controlSwitch;
   Ultrasonic ultrasonic;
 
   /**
@@ -82,11 +79,10 @@ public class Robot extends TimedRobot {
     //controlSwitch = new ControlSwitch(color);
 
     driveTrain = new DriveTrain();
-    ballControl = new BallManipulator();
 
     auto = new AutoTask(driveTrain, camera);
     driver = new DriverTask(0, driveTrain, camera);
-    secondary = new SecondaryTask(1, camera, controlSwitch, ultrasonic);
+    // secondary = new SecondaryTask(1, camera, ultrasonic);
     
 
   }
@@ -174,13 +170,13 @@ public class Robot extends TimedRobot {
     //Once the field has decided the color, set everything up for it outdated, for 2020
     if(DriverStation.getGameSpecificMessage().length() > 0)
     {
-      controlSwitch.updateColorChar(DriverStation.getGameSpecificMessage().charAt(0));
+      // controlSwitch.updateColorChar(DriverStation.getGameSpecificMessage().charAt(0));
     }   
   
     //color.updateColor();
 
     driver.teleop();
-    secondary.teleop();
+    // secondary.teleop();
   }
 
   /**
