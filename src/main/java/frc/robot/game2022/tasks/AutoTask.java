@@ -44,8 +44,8 @@ public class AutoTask
     private final double driveTrainWidth = 23.8; //Width between wheels from end to end (from middle to middle is 23.0)
     private DriveTrain driveTrain;
     private Camera camera;
-    private DifferentialDriveKinematics kinematics;
-    private DifferentialDriveOdometry odometry;
+    private DifferentialDriveKinematics kinematics; //help change chassis-speed to individual wheel speed
+    private DifferentialDriveOdometry odometry; //helps estimate position and orientation
     private Pose2d currentPose;
     private Rotation2d gyroAngle;
     private final Timer timer = new Timer();
