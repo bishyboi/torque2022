@@ -32,12 +32,10 @@ public class AutoTask
     public static final double kvVolts = 1.98;//SecondsPerMeter         | Velocity
     public static final double kaVolts = 0.2;//SecondsSquaredPerMeter   | Acceleration
     public static final double kPDriveVel = 8.5;
-    //RAAAAAG
 
     //SET THESE TO WHAT WE WANT THEM TO BE
     public static final double maxVelocity = 10; //MetersPerSecond
     public static final double maxAcceleration = 10;//MetersPerSecondSquared
-    //Quackamoles
 
     //Given by the example, I'll trust this works
     public static final double kRamseteB = 2;
@@ -102,7 +100,6 @@ public class AutoTask
             m_rightController.reset();
         }   
         */
-
     }
 
 

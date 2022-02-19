@@ -47,15 +47,17 @@ public class DriverTask
      * Runs the driver controller during teleop period. Constantly cycled through in teleopPeriodic()
      */
     public void teleop()
-    {
+    {   
+        //why the actual flukc does right stick left and right move the motor
+        //changed RIGHT_X_AXIS to RIGHT_Y_AXIS & leftPower/rightPower to left_y/right_y
         double left_y = deadband(driver.getAxis(ConfigurationService.LEFT_Y_AXIS));
-        double right_x = deadband(driver.getAxis(ConfigurationService.RIGHT_X_AXIS));
+        double right_y = deadband(driver.getAxis(ConfigurationService.RIGHT_Y_AXIS)); /////
 
-        double leftPower;
-        double rightPower;
+        double leftPower = left_y; /////
+        double rightPower = right_y; /////
         
-        leftPower = left_y - right_x;
-        rightPower = left_y + right_x;
+        //leftPower = left_y - right_x; ////
+        //rightPower = left_y + right_x; ////
 
         //To make sure no side go OutOfBounds with the power and crash the code (other side is divdided to keep relative power)
         if (Math.abs(leftPower) > 1)
@@ -69,8 +71,8 @@ public class DriverTask
             rightPower /= Math.abs(rightPower);
         }
         
-        //converts to voltage from percentage
-        if(!driver.getButton(ConfigurationService.BTN_A))
+        //Scaling the power (originally -1 to 1) by the max voltage to get a percentage of maxVoltage
+        if(driver.getButton(ConfigurationService.BTN_A))
         {
             leftPower *= maxVoltage;
             rightPower*= maxVoltage;
@@ -109,7 +111,9 @@ public class DriverTask
         //Drive the robot. Should always be last line and alone! Mostly used for debugging
         SmartDashboard.putNumber("Left Power", leftPower);
         SmartDashboard.putNumber("Right Power", rightPower);
-        if(driver.getButton(ConfigurationService.BTN_A))
+        SmartDashboard.putNumber("Left-Y", left_y);
+        SmartDashboard.putNumber("Right-X", right_y);
+        if(!driver.getButton(ConfigurationService.BTN_A))
         {
             driveTrain.drivePercentageOutput(leftPower, rightPower);
         }
@@ -160,7 +164,7 @@ public class DriverTask
      * @return the corrected axis.
      */
     private double deadband(double input) {
-        if (Math.abs(input)<0.5){
+        if (Math.abs(input)<0.2){
             return 0.0;
         }
         else{
