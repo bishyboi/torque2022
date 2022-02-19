@@ -164,7 +164,7 @@ public class DriverTask
      * @return the corrected axis.
      */
     private double deadband(double input) {
-        if (Math.abs(input)<0.2){
+        if (Math.abs(input)< ConfigurationService.JOYSTICK_DEADZONE){
             return 0.0;
         }
         else{
