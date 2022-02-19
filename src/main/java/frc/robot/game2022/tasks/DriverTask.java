@@ -48,15 +48,13 @@ public class DriverTask
      */
     public void teleop()
     {
-        //changed RIGHT_X_AXIS to RIGHT_Y_AXIS & leftPower/rightPower to left_y/right_y
+        //Reading in axes from Controller and if they're within the deadband range, it sets it to 0
         double left_y = deadband(driver.getAxis(ConfigurationService.LEFT_Y_AXIS));
-        double right_y = deadband(driver.getAxis(ConfigurationService.RIGHT_Y_AXIS)); /////
+        double right_y = deadband(driver.getAxis(ConfigurationService.RIGHT_Y_AXIS));
 
-        double leftPower = left_y; /////
-        double rightPower = right_y; /////
-        
-        //leftPower = left_y - right_x; ////
-        //rightPower = left_y + right_x; ////
+        //Add conversions to power output based on controls here
+        double leftPower = left_y;
+        double rightPower = right_y;
 
         //To make sure no side go OutOfBounds with the power and crash the code (other side is divdided to keep relative power)
         if (Math.abs(leftPower) > 1)
@@ -70,13 +68,6 @@ public class DriverTask
             rightPower /= Math.abs(rightPower);
         }
         
-        //Scaling the power (originally -1 to 1) by the max voltage to get a percentage of maxVoltage
-        if(driver.getButton(ConfigurationService.BTN_A))
-        {
-            leftPower *= maxVoltage;
-            rightPower*= maxVoltage;
-        }
-        
 
         //Sets output to 25% normal power if RB is pressed 
         if(isSlowed())
@@ -84,6 +75,7 @@ public class DriverTask
             leftPower *= 0.25;
             rightPower *= 0.25;
         }
+        
         //Automatically centers the robot if B is held
         if(isRunningAutoVision())
         {
