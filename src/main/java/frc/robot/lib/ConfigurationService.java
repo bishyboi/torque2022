@@ -23,7 +23,7 @@ public class ConfigurationService
     
     //GAMEPAD REFERENCES
     //DO NOT EDIT THIS CODE!!!
-    public static final double JOYSTICK_DEADZONE      = 0.1;
+    public static final double JOYSTICK_DEADZONE      = 0.15;
     
     public static final int LEFT_X_AXIS		          = 0;
     public static final int LEFT_Y_AXIS		          = 1;
