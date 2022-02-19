@@ -12,9 +12,7 @@ public class ConfigurationService
     public static final int DRIVETRAIN_LEFT_MASTER    = 1; //technically all of these are subject to change, tuning soon
     public static final int DRIVETRAIN_LEFT_SLAVE     = 0;
     public static final int DRIVETRAIN_RIGHT_MASTER   = 2;
-    public static final int DRIVETRAIN_RIGHT_SLAVE    = 3;
-    public static final int Tester                    = 0;
-    
+    public static final int DRIVETRAIN_RIGHT_SLAVE    = 3;    
 
     //Sensors
     public static final int ULTRASONIC_PORT           = 0; 
@@ -23,7 +21,7 @@ public class ConfigurationService
     
     //GAMEPAD REFERENCES
     //DO NOT EDIT THIS CODE!!!
-    public static final double JOYSTICK_DEADZONE      = 0.15;
+    public static final double JOYSTICK_DEADZONE      = 0.1;
     
     public static final int LEFT_X_AXIS		          = 0;
     public static final int LEFT_Y_AXIS		          = 1;
