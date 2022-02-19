@@ -47,8 +47,7 @@ public class DriverTask
      * Runs the driver controller during teleop period. Constantly cycled through in teleopPeriodic()
      */
     public void teleop()
-    {   
-        //why the actual flukc does right stick left and right move the motor
+    {
         //changed RIGHT_X_AXIS to RIGHT_Y_AXIS & leftPower/rightPower to left_y/right_y
         double left_y = deadband(driver.getAxis(ConfigurationService.LEFT_Y_AXIS));
         double right_y = deadband(driver.getAxis(ConfigurationService.RIGHT_Y_AXIS)); /////
@@ -112,7 +111,7 @@ public class DriverTask
         SmartDashboard.putNumber("Left Power", leftPower);
         SmartDashboard.putNumber("Right Power", rightPower);
         SmartDashboard.putNumber("Left-Y", left_y);
-        SmartDashboard.putNumber("Right-X", right_y);
+        SmartDashboard.putNumber("Right-Y", right_y);
         if(!driver.getButton(ConfigurationService.BTN_A))
         {
             driveTrain.drivePercentageOutput(leftPower, rightPower);
