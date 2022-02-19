@@ -17,6 +17,8 @@ public class ConfigurationService
     //TALON Port Integers for Modules (2022)
     public static final int ARM_LOWER                 = 4;
     public static final int ARM_UPPER                 = 5;
+    public static final int COMBINE_INTAKE            = 6;
+    public static final int COMBINE_LIFT              = 7;
 
     //Sensors
     public static final int ULTRASONIC_PORT           = 0; 
