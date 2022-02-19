@@ -160,7 +160,12 @@ public class DriverTask
      * @return the corrected axis.
      */
     private double deadband(double input) {
-        return Math.abs(input) < 0.15 ? 0.0 : input;
+        if (Math.abs(input)<0.5){
+            return 0.0;
+        }
+        else{
+            return input;
+        }
     }
 
     /**
