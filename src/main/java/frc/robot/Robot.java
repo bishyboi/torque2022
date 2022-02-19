@@ -27,7 +27,7 @@ import frc.robot.lib.tools.Ultrasonic;
 
 import frc.robot.game2022.tasks.AutoTask;
 import frc.robot.game2022.tasks.DriverTask;
-import frc.robot.game2022.tasks.SecondaryTask;
+//import frc.robot.game2022.tasks.SecondaryTask;
 
 // public class Robot extends TimedRobot {
 //   public Robot(){
@@ -55,7 +55,7 @@ public class Robot extends TimedRobot {
   Pose2d finalPose;
 
   DriverTask driver;
-  SecondaryTask secondary;
+  //SecondaryTask secondary;
   AutoTask auto;
   DriveTrain driveTrain;
   Camera camera;
