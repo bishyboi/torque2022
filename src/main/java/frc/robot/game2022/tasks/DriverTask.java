@@ -75,7 +75,7 @@ public class DriverTask
             leftPower *= 0.25;
             rightPower *= 0.25;
         }
-        
+
         //Automatically centers the robot if B is held
         if(isRunningAutoVision())
         {
@@ -104,6 +104,7 @@ public class DriverTask
         SmartDashboard.putNumber("Right Power", rightPower);
         SmartDashboard.putNumber("Left-Y", left_y);
         SmartDashboard.putNumber("Right-Y", right_y);
+        
         if(!driver.getButton(ConfigurationService.BTN_A))
         {
             driveTrain.drivePercentageOutput(leftPower, rightPower);

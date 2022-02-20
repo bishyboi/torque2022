@@ -4,7 +4,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import frc.robot.game2022.modules.Arm;
 import frc.robot.lib.ConfigurationService;
 import frc.robot.lib.components.DriveTrain;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
