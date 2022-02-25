@@ -23,11 +23,12 @@ import frc.robot.lib.components.Camera;
 import frc.robot.lib.components.DriveTrain;
 import frc.robot.lib.tools.ColorSensor;
 import frc.robot.lib.tools.Ultrasonic;
+import frc.robot.game2022.modules.Arm;
 
 
 import frc.robot.game2022.tasks.AutoTask;
 import frc.robot.game2022.tasks.DriverTask;
-import frc.robot.game2022.tasks.SecondaryTask;
+//import frc.robot.game2022.tasks.SecondaryTask;
 
 // public class Robot extends TimedRobot {
 //   public Robot(){
@@ -55,11 +56,12 @@ public class Robot extends TimedRobot {
   Pose2d finalPose;
 
   DriverTask driver;
-  SecondaryTask secondary;
+  //SecondaryTask secondary;
   AutoTask auto;
   DriveTrain driveTrain;
   Camera camera;
   Ultrasonic ultrasonic;
+  Arm arm;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -81,7 +83,7 @@ public class Robot extends TimedRobot {
     driveTrain = new DriveTrain();
 
     auto = new AutoTask(driveTrain, camera);
-    driver = new DriverTask(0, driveTrain, camera);
+    driver = new DriverTask(0, driveTrain, camera, arm);
     // secondary = new SecondaryTask(1, camera, ultrasonic);
     
 
@@ -116,7 +118,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     autoSelected = chooser.getSelected();
-    // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
+    //m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Path selected: " + autoSelected);
     switch (autoSelected) {
       case "Straight":

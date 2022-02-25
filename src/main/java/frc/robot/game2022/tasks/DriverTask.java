@@ -8,6 +8,7 @@ import edu.wpi.first.networktables.*;
 import frc.robot.lib.components.Xbox;
 import frc.robot.lib.components.Camera;
 import java.time.Clock;
+import frc.robot.game2022.modules.Arm;
 
 /**
  * Created by Nick Sloss on 2/7/2017.
@@ -19,6 +20,7 @@ public class DriverTask
     
 
     private final DriveTrain driveTrain;
+    private final Arm arm;
     private Camera camera;
 
     // TODO: ABSOLUTELY NEEDS TUNING
@@ -36,11 +38,12 @@ public class DriverTask
      * @param drivetrain The drivetrain responsible for robot control
      * 
      */
-    public DriverTask(int port, DriveTrain driveTrain, Camera camera)
+    public DriverTask(int port, DriveTrain driveTrain, Camera camera, Arm arm)
     {
         this.driver = new Xbox(port);
         this.driveTrain = driveTrain;
-        this.camera = camera;     
+        this.camera = camera;
+        this.arm = arm;     
     }
 
     /**
@@ -48,14 +51,24 @@ public class DriverTask
      */
     public void teleop()
     {
+        //Reading in axes from Controller and if they're within the deadband range, it sets it to 0
         double left_y = deadband(driver.getAxis(ConfigurationService.LEFT_Y_AXIS));
-        double right_x = deadband(driver.getAxis(ConfigurationService.RIGHT_X_AXIS));
+        double right_y = deadband(driver.getAxis(ConfigurationService.RIGHT_Y_AXIS));
 
+<<<<<<< HEAD
         double leftPower;
         double rightPower;
         
         leftPower = left_y;
         rightPower = left_y;
+=======
+        //Add conversions to power output based on controls here
+        double leftPower = left_y;
+        double rightPower = right_y;
+
+        double armLowerPower = maxVoltage/2;
+        double armUpperPower = maxVoltage/2;
+>>>>>>> 520ba6b780bdf829ae7be3daa3be991954b7fa0e
 
         //To make sure no side go OutOfBounds with the power and crash the code (other side is divdided to keep relative power)
         if (Math.abs(leftPower) > 1)
@@ -69,13 +82,6 @@ public class DriverTask
             rightPower /= Math.abs(rightPower);
         }
         
-        //converts to voltage from percentage
-        if(!driver.getButton(ConfigurationService.BTN_A))
-        {
-            leftPower *= maxVoltage;
-            rightPower*= maxVoltage;
-        }
-        
 
         //Sets output to 25% normal power if RB is pressed 
         if(isSlowed())
@@ -83,6 +89,7 @@ public class DriverTask
             leftPower *= 0.25;
             rightPower *= 0.25;
         }
+
         //Automatically centers the robot if B is held
         if(isRunningAutoVision())
         {
@@ -109,7 +116,10 @@ public class DriverTask
         //Drive the robot. Should always be last line and alone! Mostly used for debugging
         SmartDashboard.putNumber("Left Power", leftPower);
         SmartDashboard.putNumber("Right Power", rightPower);
-        if(driver.getButton(ConfigurationService.BTN_A))
+        SmartDashboard.putNumber("Left-Y", left_y);
+        SmartDashboard.putNumber("Right-Y", right_y);
+        
+        if(!driver.getButton(ConfigurationService.BTN_A))
         {
             driveTrain.drivePercentageOutput(leftPower, rightPower);
         }
@@ -117,7 +127,24 @@ public class DriverTask
         {
             driveTrain.tankDriveWithFeedforwardPID(-leftPower, rightPower);
         }
-        
+
+        //Checking to see if X and Y are pressed to move the lower part of the arm
+        if(driver.getButton(ConfigurationService.BTN_X)){
+            arm.lowerMove(armLowerPower);;
+        }
+        else if(driver.getButton(ConfigurationService.BTN_Y))
+        {
+            arm.lowerMove(-armLowerPower);
+        }
+
+        //Checking to see if A and B are pressed to move the upper part of the arm
+        if(driver.getButton(ConfigurationService.BTN_A)){
+            arm.upperMove(armUpperPower);;
+        }
+        else if(driver.getButton(ConfigurationService.BTN_B))
+        {
+            arm.upperMove(-armUpperPower);
+        }
     }
     /**
      * Checks to see if the driver wants to slow down the drive speed of the car
@@ -160,10 +187,15 @@ public class DriverTask
      * @return the corrected axis.
      */
     private double deadband(double input) {
+<<<<<<< HEAD
         //return Math.abs(input) < 0.15 ? 0.0 : input;
         if (Math.abs(input)<0.5)
         {
             return 0;
+=======
+        if (Math.abs(input)< ConfigurationService.JOYSTICK_DEADZONE){
+            return 0.0;
+>>>>>>> 520ba6b780bdf829ae7be3daa3be991954b7fa0e
         }
         else{
             return input;

@@ -32,12 +32,10 @@ public class AutoTask
     public static final double kvVolts = 1.98;//SecondsPerMeter         | Velocity
     public static final double kaVolts = 0.2;//SecondsSquaredPerMeter   | Acceleration
     public static final double kPDriveVel = 8.5;
-    //RAAAAAG
 
     //SET THESE TO WHAT WE WANT THEM TO BE
     public static final double maxVelocity = 10; //MetersPerSecond
     public static final double maxAcceleration = 10;//MetersPerSecondSquared
-    //Quackamoles
 
     //Given by the example, I'll trust this works
     public static final double kRamseteB = 2;
@@ -46,8 +44,8 @@ public class AutoTask
     private final double driveTrainWidth = 23.8; //Width between wheels from end to end (from middle to middle is 23.0)
     private DriveTrain driveTrain;
     private Camera camera;
-    private DifferentialDriveKinematics kinematics;
-    private DifferentialDriveOdometry odometry;
+    private DifferentialDriveKinematics kinematics; //help change chassis-speed to individual wheel speed
+    private DifferentialDriveOdometry odometry; //helps estimate position and orientation
     private Pose2d currentPose;
     private Rotation2d gyroAngle;
     private final Timer timer = new Timer();
@@ -102,7 +100,6 @@ public class AutoTask
             m_rightController.reset();
         }   
         */
-
     }
 
 
