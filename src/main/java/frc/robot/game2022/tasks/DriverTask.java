@@ -8,6 +8,7 @@ import edu.wpi.first.networktables.*;
 import frc.robot.lib.components.Xbox;
 import frc.robot.lib.components.Camera;
 import java.time.Clock;
+import frc.robot.game2022.modules.Arm;
 
 /**
  * Created by Nick Sloss on 2/7/2017.
@@ -19,6 +20,7 @@ public class DriverTask
     
 
     private final DriveTrain driveTrain;
+    private final Arm arm;
     private Camera camera;
 
     // TODO: ABSOLUTELY NEEDS TUNING
@@ -36,11 +38,12 @@ public class DriverTask
      * @param drivetrain The drivetrain responsible for robot control
      * 
      */
-    public DriverTask(int port, DriveTrain driveTrain, Camera camera)
+    public DriverTask(int port, DriveTrain driveTrain, Camera camera, Arm arm)
     {
         this.driver = new Xbox(port);
         this.driveTrain = driveTrain;
-        this.camera = camera;     
+        this.camera = camera;
+        this.arm = arm;     
     }
 
     /**
@@ -55,6 +58,9 @@ public class DriverTask
         //Add conversions to power output based on controls here
         double leftPower = left_y;
         double rightPower = right_y;
+
+        double armLowerPower = maxVoltage/2;
+        double armUpperPower = maxVoltage/2;
 
         //To make sure no side go OutOfBounds with the power and crash the code (other side is divdided to keep relative power)
         if (Math.abs(leftPower) > 1)
@@ -113,7 +119,24 @@ public class DriverTask
         {
             driveTrain.tankDriveWithFeedforwardPID(-leftPower, rightPower);
         }
-        
+
+        //Checking to see if X and Y are pressed to move the lower part of the arm
+        if(driver.getButton(ConfigurationService.BTN_X)){
+            arm.lowerMove(armLowerPower);;
+        }
+        else if(driver.getButton(ConfigurationService.BTN_Y))
+        {
+            arm.lowerMove(-armLowerPower);
+        }
+
+        //Checking to see if A and B are pressed to move the upper part of the arm
+        if(driver.getButton(ConfigurationService.BTN_A)){
+            arm.upperMove(armUpperPower);;
+        }
+        else if(driver.getButton(ConfigurationService.BTN_B))
+        {
+            arm.upperMove(-armUpperPower);
+        }
     }
     /**
      * Checks to see if the driver wants to slow down the drive speed of the car
