@@ -22,7 +22,7 @@ public class DriverTask
     private Camera camera;
 
     // TODO: ABSOLUTELY NEEDS TUNING
-    private final int maxVoltage = 10; 
+    private final int maxVoltage =1; 
     
     Clock clock;
     private final long lockoutPeriod = 500;//in milliseconds 0.001s
@@ -54,8 +54,8 @@ public class DriverTask
         double leftPower;
         double rightPower;
         
-        leftPower = left_y - right_x;
-        rightPower = left_y + right_x;
+        leftPower = left_y;
+        rightPower = left_y;
 
         //To make sure no side go OutOfBounds with the power and crash the code (other side is divdided to keep relative power)
         if (Math.abs(leftPower) > 1)
@@ -160,7 +160,14 @@ public class DriverTask
      * @return the corrected axis.
      */
     private double deadband(double input) {
-        return Math.abs(input) < 0.15 ? 0.0 : input;
+        //return Math.abs(input) < 0.15 ? 0.0 : input;
+        if (Math.abs(input)<0.5)
+        {
+            return 0;
+        }
+        else{
+            return input;
+        }
     }
 
     /**
