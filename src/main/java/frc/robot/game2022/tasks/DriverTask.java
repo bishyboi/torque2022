@@ -1,6 +1,8 @@
 package frc.robot.game2022.tasks;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.revrobotics.Config;
+
 import frc.robot.lib.ConfigurationService;
 import frc.robot.lib.components.DriveTrain;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -126,16 +128,16 @@ public class DriverTask
             driveTrain.tankDriveWithFeedforwardPID(-leftPower, rightPower);
         }
 
-        //Checking to see if X and Y are pressed to move the lower part of the arm
-        if(driver.getButton(ConfigurationService.BTN_X)){
+        //Lower Arm movement detecting Button LT and RT
+        if(driver.getAxisActive(ConfigurationService.LEFT_TRIGGER)){
             arm.lowerMove(armLowerPower);;
         }
-        else if(driver.getButton(ConfigurationService.BTN_Y))
+        else if(driver.getAxisActive(ConfigurationService.RIGHT_TRIGGER))
         {
             arm.lowerMove(-armLowerPower);
         }
 
-        //Checking to see if RB and LB are pressed to move the upper part of the arm
+        //Upper Arm movement detecting RB and LB
         if(driver.getButton(ConfigurationService.BTN_RB)){
             arm.upperMove(armUpperPower);;
         }
