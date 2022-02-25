@@ -2,6 +2,7 @@ package frc.robot.lib.components;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.lib.ConfigurationService;
 
 /**
  * Created by Nick Sloss on 1/13/18.
@@ -48,6 +49,18 @@ public class Xbox
     public double getAxis(int axisPort)
     {
         return wpiJoystick.getRawAxis(axisPort);
+    }
+
+    public boolean getAxisActive(int axisPort)
+    {
+        if (this.getAxis(axisPort)>0.1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
 
