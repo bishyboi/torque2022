@@ -24,6 +24,7 @@ import frc.robot.lib.components.DriveTrain;
 import frc.robot.lib.tools.ColorSensor;
 import frc.robot.lib.tools.Ultrasonic;
 import frc.robot.game2022.modules.Arm;
+import frc.robot.game2022.modules.Combine;
 
 
 import frc.robot.game2022.tasks.AutoTask;
@@ -62,6 +63,7 @@ public class Robot extends TimedRobot {
   Camera camera;
   Ultrasonic ultrasonic;
   Arm arm;
+  Combine combine;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -83,7 +85,7 @@ public class Robot extends TimedRobot {
     driveTrain = new DriveTrain();
 
     auto = new AutoTask(driveTrain, camera);
-    driver = new DriverTask(0, driveTrain, camera, arm);
+    driver = new DriverTask(0, driveTrain, camera, arm, combine);
     // secondary = new SecondaryTask(1, camera, ultrasonic);
     
 

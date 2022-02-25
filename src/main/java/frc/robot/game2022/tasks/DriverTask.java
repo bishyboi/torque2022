@@ -9,6 +9,7 @@ import frc.robot.lib.components.Xbox;
 import frc.robot.lib.components.Camera;
 import java.time.Clock;
 import frc.robot.game2022.modules.Arm;
+import frc.robot.game2022.modules.Combine;
 
 /**
  * Created by Nick Sloss on 2/7/2017.
@@ -21,6 +22,7 @@ public class DriverTask
 
     private final DriveTrain driveTrain;
     private final Arm arm;
+    private final Combine combine;
     private Camera camera;
 
     // TODO: ABSOLUTELY NEEDS TUNING
@@ -36,14 +38,16 @@ public class DriverTask
      * @param driver The driver gamepad
      * @param eyes the camera
      * @param drivetrain The drivetrain responsible for robot control
-     * 
+     * @param arm the arm
+     * @param combine the combine :)
      */
-    public DriverTask(int port, DriveTrain driveTrain, Camera camera, Arm arm)
+    public DriverTask(int port, DriveTrain driveTrain, Camera camera, Arm arm, Combine combine)
     {
         this.driver = new Xbox(port);
         this.driveTrain = driveTrain;
         this.camera = camera;
-        this.arm = arm;     
+        this.arm = arm;
+        this.combine = combine;     
     }
 
     /**
@@ -55,20 +59,14 @@ public class DriverTask
         double left_y = deadband(driver.getAxis(ConfigurationService.LEFT_Y_AXIS));
         double right_y = deadband(driver.getAxis(ConfigurationService.RIGHT_Y_AXIS));
 
-<<<<<<< HEAD
-        double leftPower;
-        double rightPower;
-        
-        leftPower = left_y;
-        rightPower = left_y;
-=======
         //Add conversions to power output based on controls here
         double leftPower = left_y;
         double rightPower = right_y;
 
         double armLowerPower = maxVoltage/2;
         double armUpperPower = maxVoltage/2;
->>>>>>> 520ba6b780bdf829ae7be3daa3be991954b7fa0e
+        double intakePower = maxVoltage/2;
+        double liftPower = maxVoltage/2;
 
         //To make sure no side go OutOfBounds with the power and crash the code (other side is divdided to keep relative power)
         if (Math.abs(leftPower) > 1)
@@ -137,14 +135,35 @@ public class DriverTask
             arm.lowerMove(-armLowerPower);
         }
 
-        //Checking to see if A and B are pressed to move the upper part of the arm
-        if(driver.getButton(ConfigurationService.BTN_A)){
+        //Checking to see if RB and LB are pressed to move the upper part of the arm
+        if(driver.getButton(ConfigurationService.BTN_RB)){
             arm.upperMove(armUpperPower);;
         }
-        else if(driver.getButton(ConfigurationService.BTN_B))
+        else if(driver.getButton(ConfigurationService.BTN_LB))
         {
             arm.upperMove(-armUpperPower);
         }
+        
+        //moving intake motor forward & backward when A & B are pressed respectively
+        if(driver.getButton(ConfigurationService.BTN_A))
+        {
+            combine.intakeMove(intakePower);
+        }
+        else if(driver.getButton(ConfigurationService.BTN_B))
+        {
+            combine.intakeMove(-intakePower);
+        }
+        
+        //moving lift motor up & down when X & Y are pressed respectively
+        if(driver.getButton(ConfigurationService.BTN_X))
+        {
+            combine.liftMove(liftPower);
+        }
+        else if(driver.getButton(ConfigurationService.BTN_Y))
+        {
+            combine.liftMove(-liftPower);
+        }
+
     }
     /**
      * Checks to see if the driver wants to slow down the drive speed of the car
@@ -187,15 +206,8 @@ public class DriverTask
      * @return the corrected axis.
      */
     private double deadband(double input) {
-<<<<<<< HEAD
-        //return Math.abs(input) < 0.15 ? 0.0 : input;
-        if (Math.abs(input)<0.5)
-        {
-            return 0;
-=======
         if (Math.abs(input)< ConfigurationService.JOYSTICK_DEADZONE){
             return 0.0;
->>>>>>> 520ba6b780bdf829ae7be3daa3be991954b7fa0e
         }
         else{
             return input;
