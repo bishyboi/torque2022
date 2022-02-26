@@ -11,6 +11,7 @@ public class Camera
     private NetworkTable table;
     private NetworkTableEntry tx, ty, ta; //x and y angle offset, ta: area of the screen the target takes up
     
+    //TODO: adjust mountAngle heightDiff and finalDistance when limelight is mounted on the robot
     public double x,y,area;
     private final double mountAngle = 0; //Angle the camera is mounted at. DOUBLE CHECK THIS IS ACCURATE
     private final double heightDiff = 5.5; //Height from camera to goal. DOUBLE CHECK THIS IS ACCURATE
@@ -68,7 +69,7 @@ public class Camera
     public double getDistance_Adjust()
     {   
         double distance_adjust;
-        double kpDistance= 0.01f; //proportional gain for distance
+        double kpDistance = 0.01f; //proportional gain for distance
         double distance_error = calculateDistance() - finalDistance;
         
         if (distance_error <= 0)
