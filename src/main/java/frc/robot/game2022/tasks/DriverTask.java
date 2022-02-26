@@ -91,22 +91,23 @@ public class DriverTask
             rightPower *= 0.25;
         }
 
-        //Automatically centers the robot if B is held
-        if(isRunningAutoVision())
-        {
-            camera.setDriverMode(false);
-            leftPower -= camera.getSteering_Adjust();
-            //leftPower -= camera.getDistance_Adjust();  really only for autonomous
-            rightPower += camera.getSteering_Adjust();
-            //rightPower -= camera.getDistance_Adjust(); really only for autonomous
-        }
-        else
-        {
-            camera.setDriverMode(true);
-        }
+        // //Automatically centers the robot if B is held
+        // if(isRunningAutoVision())
+        // {
+        //     camera.setDriverMode(false);
+        //     leftPower -= camera.getSteering_Adjust();
+        //     //leftPower -= camera.getDistance_Adjust();  really only for autonomous
+        //     rightPower += camera.getSteering_Adjust();
+        //     //rightPower -= camera.getDistance_Adjust(); really only for autonomous
+        // }
+        // else
+        // {
+        //     camera.setDriverMode(true);
+        // }
+        camera.setDriverMode(true);
         
-        //If Y is pressed, toggle which side is front (from driver's perspective)
-        toggleFrontSide();
+        // //If Y is pressed, toggle which side is front (from driver's perspective)
+        // toggleFrontSide();
 
         if(!driveFront)
         {
@@ -186,23 +187,23 @@ public class DriverTask
         return driver.getButton(ConfigurationService.BTN_B);
     }
    
-    private void toggleFrontSide()
-    {
-        if (driver.getButton(ConfigurationService.BTN_Y))
-        {
-            boolean timedOut = ((clock.millis() - lastPress) >= lockoutPeriod);
-            if (driveFront && timedOut)
-            {
-                driveFront = false;
-                lastPress = clock.millis();
-            }
-            else if(!driveFront && timedOut)
-            {
-                driveFront = true;
-                lastPress = clock.millis();
-            }
-        }
-    }
+    // private void toggleFrontSide()
+    // {
+    //     if (driver.getButton(ConfigurationService.BTN_Y))
+    //     {
+    //         boolean timedOut = ((clock.millis() - lastPress) >= lockoutPeriod);
+    //         if (driveFront && timedOut)
+    //         {
+    //             driveFront = false;
+    //             lastPress = clock.millis();
+    //         }
+    //         else if(!driveFront && timedOut)
+    //         {
+    //             driveFront = true;
+    //             lastPress = clock.millis();
+    //         }
+    //     }
+    // }
     /**
      * deadbands a specified input
      * @param input the input of the axis
