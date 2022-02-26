@@ -191,5 +191,6 @@ move to hub
 drop ball
     dropBall ()
 move out
+    move (double distance)
 (find ball maybe)
 */

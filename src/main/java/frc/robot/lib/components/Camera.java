@@ -30,18 +30,19 @@ public class Camera
     
     /**
      * changes modes between teleOP and autonomous for camera
+     * @param isDriving true - teleop, false - autonomous
      */
     public void setDriverMode(boolean isDriving)
     {
         if(isDriving)
         {
-            table.getEntry("camMode").setNumber(1);
-            table.getEntry("ledMode").setNumber(1);
+            table.getEntry("camMode").setNumber(1); // normal camera
+            table.getEntry("ledMode").setNumber(1); // no limelight
         }
         else
         {
-            table.getEntry("camMode").setNumber(0);
-            table.getEntry("ledMode").setNumber(3);
+            table.getEntry("camMode").setNumber(0); // low exposure to only see reflection
+            table.getEntry("ledMode").setNumber(3); // limelight
         }
     }
 
@@ -88,6 +89,9 @@ public class Camera
         return distance_adjust;
     }
 
+    /**
+     * @return energy required to steer
+     */
     public double getSteering_Adjust()
     {
         double steering_adjust = 0.0;
