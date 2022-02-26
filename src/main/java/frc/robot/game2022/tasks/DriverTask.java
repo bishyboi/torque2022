@@ -29,7 +29,7 @@ public class DriverTask
     private Camera camera;
 
     // TODO: ABSOLUTELY NEEDS TUNING
-    private final int maxVoltage = 1; 
+    private final double maxVoltage = 1.0; 
     
     Clock clock;
     private final long lockoutPeriod = 500;//in milliseconds 0.001s
@@ -66,10 +66,10 @@ public class DriverTask
         double leftPower = left_y;
         double rightPower = right_y;
 
-        double armLowerPower = maxVoltage/2;
-        double armUpperPower = maxVoltage/2;
-        double intakePower = maxVoltage/2;
-        double liftPower = maxVoltage/2;
+        double armLowerPower = boundCap(maxVoltage);
+        double armUpperPower = boundCap(maxVoltage);
+        double intakePower = boundCap(maxVoltage);
+        double liftPower = boundCap(maxVoltage);
 
         //To make sure no side go OutOfBounds with the power and crash the code (other side is divdided to keep relative power)
         if (Math.abs(leftPower) > 1)
@@ -215,6 +215,23 @@ public class DriverTask
         }
         else{
             return input;
+        }
+    }
+    /**
+     * 
+     * @param double powerOutput, power to be bounded from -1 to 1 
+     * @return -1/1 if powerOutput is less than -1/ greater than 1,
+     *         powerOutput otherwise
+     */
+    private double boundCap(double powerOutput)
+    {
+        if (Math.abs(powerOutput) > 1)
+        {
+            return (powerOutput/Math.abs(powerOutput));
+        }
+        else
+        {
+            return powerOutput;
         }
     }
 
