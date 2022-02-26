@@ -1,6 +1,9 @@
 package frc.robot.game2022.tasks;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+//import com.revrobotics.Config;
+//import com.revrobotics.*;
+
 import frc.robot.lib.ConfigurationService;
 import frc.robot.lib.components.DriveTrain;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -9,6 +12,7 @@ import frc.robot.lib.components.Xbox;
 import frc.robot.lib.components.Camera;
 import java.time.Clock;
 import frc.robot.game2022.modules.Arm;
+import frc.robot.game2022.modules.Combine;
 
 /**
  * Created by Nick Sloss on 2/7/2017.
@@ -21,10 +25,16 @@ public class DriverTask
 
     private final DriveTrain driveTrain;
     private final Arm arm;
+    private final Combine combine;
     private Camera camera;
 
+<<<<<<< HEAD
     
     private final int maxVoltage =10; 
+=======
+    // TODO: ABSOLUTELY NEEDS TUNING
+    private final double maxVoltage = 1.0; 
+>>>>>>> 5c685fe1a6554ff031de0785af944a837f4b9d80
     
     Clock clock;
     private final long lockoutPeriod = 500;//in milliseconds 0.001s
@@ -36,14 +46,16 @@ public class DriverTask
      * @param driver The driver gamepad
      * @param eyes the camera
      * @param drivetrain The drivetrain responsible for robot control
-     * 
+     * @param arm the arm
+     * @param combine the combine :)
      */
-    public DriverTask(int port, DriveTrain driveTrain, Camera camera, Arm arm)
+    public DriverTask(int port, DriveTrain driveTrain, Camera camera, Arm arm, Combine combine)
     {
         this.driver = new Xbox(port);
         this.driveTrain = driveTrain;
         this.camera = camera;
-        this.arm = arm;     
+        this.arm = arm;
+        this.combine = combine;     
     }
 
     /**
@@ -59,8 +71,15 @@ public class DriverTask
         double leftPower = left_y;
         double rightPower = right_y;
 
+<<<<<<< HEAD
         double armLowerPower = maxVoltage/2;
         double armUpperPower = maxVoltage/2;
+=======
+        double armLowerPower = boundCap(maxVoltage);
+        double armUpperPower = boundCap(maxVoltage);
+        double intakePower = boundCap(maxVoltage);
+        double liftPower = boundCap(maxVoltage);
+>>>>>>> 5c685fe1a6554ff031de0785af944a837f4b9d80
 
         //To make sure no side go OutOfBounds with the power and crash the code (other side is divdided to keep relative power)
         if (Math.abs(leftPower) > 1)
@@ -82,22 +101,23 @@ public class DriverTask
             rightPower *= 0.25;
         }
 
-        //Automatically centers the robot if B is held
-        if(isRunningAutoVision())
-        {
-            camera.setDriverMode(false);
-            leftPower -= camera.getSteering_Adjust();
-            //leftPower -= camera.getDistance_Adjust();  really only for autonomous
-            rightPower += camera.getSteering_Adjust();
-            //rightPower -= camera.getDistance_Adjust(); really only for autonomous
-        }
-        else
-        {
-            camera.setDriverMode(true);
-        }
+        // //Automatically centers the robot if B is held
+        // if(isRunningAutoVision())
+        // {
+        //     camera.setDriverMode(false);
+        //     leftPower -= camera.getSteering_Adjust();
+        //     //leftPower -= camera.getDistance_Adjust();  really only for autonomous
+        //     rightPower += camera.getSteering_Adjust();
+        //     //rightPower -= camera.getDistance_Adjust(); really only for autonomous
+        // }
+        // else
+        // {
+        //     camera.setDriverMode(true);
+        // }
+        camera.setDriverMode(true);
         
-        //If Y is pressed, toggle which side is front (from driver's perspective)
-        toggleFrontSide();
+        // //If Y is pressed, toggle which side is front (from driver's perspective)
+        // toggleFrontSide();
 
         if(!driveFront)
         {
@@ -120,23 +140,44 @@ public class DriverTask
             driveTrain.tankDriveWithFeedforwardPID(-leftPower, rightPower);
         }
 
-        //Checking to see if X and Y are pressed to move the lower part of the arm
-        if(driver.getButton(ConfigurationService.BTN_X)){
-            arm.lowerMove(armLowerPower);;
+        //Lower Arm movement detecting Button LT and RT
+        if(driver.getAxisActive(ConfigurationService.LEFT_TRIGGER)){
+            arm.lowerMove(armLowerPower);
         }
-        else if(driver.getButton(ConfigurationService.BTN_Y))
+        else if(driver.getAxisActive(ConfigurationService.RIGHT_TRIGGER))
         {
             arm.lowerMove(-armLowerPower);
         }
 
-        //Checking to see if A and B are pressed to move the upper part of the arm
-        if(driver.getButton(ConfigurationService.BTN_A)){
-            arm.upperMove(armUpperPower);;
+        //Upper Arm movement detecting RB and LB
+        if(driver.getButton(ConfigurationService.BTN_RB)){
+            arm.upperMove(armUpperPower);
         }
-        else if(driver.getButton(ConfigurationService.BTN_B))
+        else if(driver.getButton(ConfigurationService.BTN_LB))
         {
             arm.upperMove(-armUpperPower);
         }
+        
+        //moving intake motor forward & backward when A & B are pressed respectively
+        if(driver.getButton(ConfigurationService.BTN_A))
+        {
+            combine.intakeMove(intakePower);
+        }
+        else if(driver.getButton(ConfigurationService.BTN_B))
+        {
+            combine.intakeMove(-intakePower);
+        }
+        
+        //moving lift motor up & down when X & Y are pressed respectively
+        if(driver.getButton(ConfigurationService.BTN_X))
+        {
+            combine.liftMove(liftPower);
+        }
+        else if(driver.getButton(ConfigurationService.BTN_Y))
+        {
+            combine.liftMove(-liftPower);
+        }
+
     }
     /**
      * Checks to see if the driver wants to slow down the drive speed of the car
@@ -147,32 +188,32 @@ public class DriverTask
         return driver.getButton(ConfigurationService.BTN_RB);
     }
 
-    /**
-     * Checks to see if the driver wants to automatically drive to a vision target/piece dropoff
-     * @return boolean testing if Button B is pressed
-     */
-    private boolean isRunningAutoVision()
-    {
-        return driver.getButton(ConfigurationService.BTN_B);
-    }
+    // /**
+    //  * Checks to see if the driver wants to automatically drive to a vision target/piece dropoff
+    //  * @return boolean testing if Button B is pressed
+    //  */
+    // private boolean isRunningAutoVision()
+    // {
+    //     return driver.getButton(ConfigurationService.BTN_B);
+    // }
    
-    private void toggleFrontSide()
-    {
-        if (driver.getButton(ConfigurationService.BTN_Y))
-        {
-            boolean timedOut = ((clock.millis() - lastPress) >= lockoutPeriod);
-            if (driveFront && timedOut)
-            {
-                driveFront = false;
-                lastPress = clock.millis();
-            }
-            else if(!driveFront && timedOut)
-            {
-                driveFront = true;
-                lastPress = clock.millis();
-            }
-        }
-    }
+    // private void toggleFrontSide()
+    // {
+    //     if (driver.getButton(ConfigurationService.BTN_Y))
+    //     {
+    //         boolean timedOut = ((clock.millis() - lastPress) >= lockoutPeriod);
+    //         if (driveFront && timedOut)
+    //         {
+    //             driveFront = false;
+    //             lastPress = clock.millis();
+    //         }
+    //         else if(!driveFront && timedOut)
+    //         {
+    //             driveFront = true;
+    //             lastPress = clock.millis();
+    //         }
+    //     }
+    // }
     /**
      * deadbands a specified input
      * @param input the input of the axis
@@ -184,6 +225,23 @@ public class DriverTask
         }
         else{
             return input;
+        }
+    }
+    /**
+     * 
+     * @param double powerOutput, power to be bounded from -1 to 1 
+     * @return -1/1 if powerOutput is less than -1/ greater than 1,
+     *         powerOutput otherwise
+     */
+    private double boundCap(double powerOutput)
+    {
+        if (Math.abs(powerOutput) > 1)
+        {
+            return (powerOutput/Math.abs(powerOutput));
+        }
+        else
+        {
+            return powerOutput;
         }
     }
 

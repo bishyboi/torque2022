@@ -182,3 +182,15 @@ public class AutoTask
 
 
 }
+/*
+point to reflective tape
+    point ()
+move to hub
+    move (double distance)
+        distance: camera.getDistance_Adjust()
+drop ball
+    dropBall ()
+move out
+    move (double distance)
+(find ball maybe)
+*/

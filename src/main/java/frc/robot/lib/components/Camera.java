@@ -11,6 +11,7 @@ public class Camera
     private NetworkTable table;
     private NetworkTableEntry tx, ty, ta; //x and y angle offset, ta: area of the screen the target takes up
     
+    //TODO: adjust mountAngle heightDiff and finalDistance when limelight is mounted on the robot
     public double x,y,area;
     private final double mountAngle = 0; //Angle the camera is mounted at. DOUBLE CHECK THIS IS ACCURATE
     private final double heightDiff = 5.5; //Height from camera to goal. DOUBLE CHECK THIS IS ACCURATE
@@ -29,18 +30,19 @@ public class Camera
     
     /**
      * changes modes between teleOP and autonomous for camera
+     * @param isDriving true - teleop, false - autonomous
      */
     public void setDriverMode(boolean isDriving)
     {
         if(isDriving)
         {
-            table.getEntry("camMode").setNumber(1);
-            table.getEntry("ledMode").setNumber(1);
+            table.getEntry("camMode").setNumber(1); // normal camera
+            table.getEntry("ledMode").setNumber(1); // no limelight
         }
         else
         {
-            table.getEntry("camMode").setNumber(0);
-            table.getEntry("ledMode").setNumber(3);
+            table.getEntry("camMode").setNumber(0); // low exposure to only see reflection
+            table.getEntry("ledMode").setNumber(3); // limelight
         }
     }
 
@@ -68,7 +70,7 @@ public class Camera
     public double getDistance_Adjust()
     {   
         double distance_adjust;
-        double kpDistance= 0.01f; //proportional gain for distance
+        double kpDistance = 0.01f; //proportional gain for distance
         double distance_error = calculateDistance() - finalDistance;
         
         if (distance_error <= 0)
@@ -87,6 +89,9 @@ public class Camera
         return distance_adjust;
     }
 
+    /**
+     * @return energy required to steer
+     */
     public double getSteering_Adjust()
     {
         double steering_adjust = 0.0;
