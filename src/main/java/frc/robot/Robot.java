@@ -25,11 +25,8 @@ import edu.wpi.first.wpilibj.Encoder;
 import frc.robot.lib.tools.Ultrasonic;
 import frc.robot.game2022.modules.Arm;
 import frc.robot.game2022.modules.Combine;
-
-
-import frc.robot.game2022.tasks.AutoTask;
-import frc.robot.game2022.tasks.DriverTask;
-//import frc.robot.game2022.tasks.SecondaryTask;
+import frc.robot.game2022.oldtasks.AutoTask;
+import frc.robot.game2022.oldtasks.DriverTask;
 
 // public class Robot extends TimedRobot {
 //   public Robot(){
@@ -175,12 +172,8 @@ public class Robot extends TimedRobot {
     if(DriverStation.getGameSpecificMessage().length() > 0)
     {
       // controlSwitch.updateColorChar(DriverStation.getGameSpecificMessage().charAt(0));
-    }   
-  
-    //color.updateColor();
-
+    }
     driver.teleop();
-    // secondary.teleop();
   }
 
   /**
@@ -202,15 +195,5 @@ public class Robot extends TimedRobot {
 	public void disabledPeriodic()
 	{
     driveTrain.drivePercentageOutput(0, 0);
-    //if (color != null){
-     /*
-      double red = color.r/color.counter;
-      double green = color.g/color.counter;
-      double blue = color.b/color.counter;
-  
-      System.out.println("Average color: " + red + ", " + green + ", " + blue);
-    */
-    //}
 	}
 }
-//heeeeeeeeeeeeeeeeey
