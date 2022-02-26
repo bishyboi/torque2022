@@ -23,8 +23,8 @@ public class DriverTask
     private final Arm arm;
     private Camera camera;
 
-    // TODO: ABSOLUTELY NEEDS TUNING
-    private final int maxVoltage =1; 
+    
+    private final int maxVoltage =10; 
     
     Clock clock;
     private final long lockoutPeriod = 500;//in milliseconds 0.001s
@@ -55,20 +55,12 @@ public class DriverTask
         double left_y = deadband(driver.getAxis(ConfigurationService.LEFT_Y_AXIS));
         double right_y = deadband(driver.getAxis(ConfigurationService.RIGHT_Y_AXIS));
 
-<<<<<<< HEAD
-        double leftPower;
-        double rightPower;
-        
-        leftPower = left_y;
-        rightPower = left_y;
-=======
         //Add conversions to power output based on controls here
         double leftPower = left_y;
         double rightPower = right_y;
 
         double armLowerPower = maxVoltage/2;
         double armUpperPower = maxVoltage/2;
->>>>>>> 520ba6b780bdf829ae7be3daa3be991954b7fa0e
 
         //To make sure no side go OutOfBounds with the power and crash the code (other side is divdided to keep relative power)
         if (Math.abs(leftPower) > 1)
@@ -187,15 +179,8 @@ public class DriverTask
      * @return the corrected axis.
      */
     private double deadband(double input) {
-<<<<<<< HEAD
-        //return Math.abs(input) < 0.15 ? 0.0 : input;
-        if (Math.abs(input)<0.5)
-        {
-            return 0;
-=======
         if (Math.abs(input)< ConfigurationService.JOYSTICK_DEADZONE){
             return 0.0;
->>>>>>> 520ba6b780bdf829ae7be3daa3be991954b7fa0e
         }
         else{
             return input;
