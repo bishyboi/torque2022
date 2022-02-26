@@ -21,7 +21,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import frc.robot.lib.ConfigurationService;
 import frc.robot.lib.components.Camera; 
 import frc.robot.lib.components.DriveTrain;
-import frc.robot.lib.tools.ColorSensor;
+import edu.wpi.first.wpilibj.Encoder;
 import frc.robot.lib.tools.Ultrasonic;
 import frc.robot.game2022.modules.Arm;
 import frc.robot.game2022.modules.Combine;

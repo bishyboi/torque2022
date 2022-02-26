@@ -15,7 +15,7 @@ public class Camera
     public double x,y,area;
     private final double mountAngle = 0; //Angle the camera is mounted at. DOUBLE CHECK THIS IS ACCURATE
     private final double heightDiff = 5.5; //Height from camera to goal. DOUBLE CHECK THIS IS ACCURATE
-    private final double finalDistance = 36; //Distance we want to be from the goal. DOUBLE CHECK THIS IS ACCURATE
+    private final double finalDistance = 36; //Distance we want the camera to be from the goal. DOUBLE CHECK THIS IS ACCURATE
     /**
      * Intializes vision
      */

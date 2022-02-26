@@ -2,6 +2,7 @@ package frc.robot.game2022.tasks;
 
 import java.util.List;
 
+
 import frc.robot.lib.components.DriveTrain;
 import frc.robot.lib.components.Camera;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -179,17 +180,19 @@ public class AutoTask
         driveTrain.drivePercentageOutput(leftPower, rightPower);
     }
 
+    public double getCircumference(double radius){ //2*pi*r for lazy ppl
+        return Math.PI*radius*2;
+    }
 
-
+    public double getDisplacement(double revolutions, double radius){ 
+        return revolutions*getCircumference(radius);
+    }
 }
 /*
-point to reflective tape
-    point ()
-move to hub
-    move (double distance)
-        distance: camera.getDistance_Adjust()
+point to reflective tape and move to hub
+    AutoTask.centerAlign()
 drop ball
-    dropBall ()
+    Combine.dropBall()
 move out
     move (double distance)
 (find ball maybe)
