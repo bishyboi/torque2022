@@ -172,12 +172,8 @@ public class Robot extends TimedRobot {
     if(DriverStation.getGameSpecificMessage().length() > 0)
     {
       // controlSwitch.updateColorChar(DriverStation.getGameSpecificMessage().charAt(0));
-    }   
-  
-    //color.updateColor();
-
+    }
     driver.teleop();
-    // secondary.teleop();
   }
 
   /**
@@ -199,15 +195,5 @@ public class Robot extends TimedRobot {
 	public void disabledPeriodic()
 	{
     driveTrain.drivePercentageOutput(0, 0);
-    //if (color != null){
-     /*
-      double red = color.r/color.counter;
-      double green = color.g/color.counter;
-      double blue = color.b/color.counter;
-  
-      System.out.println("Average color: " + red + ", " + green + ", " + blue);
-    */
-    //}
 	}
 }
-//heeeeeeeeeeeeeeeeey
