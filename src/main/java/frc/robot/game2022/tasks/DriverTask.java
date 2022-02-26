@@ -132,7 +132,7 @@ public class DriverTask
 
         //Lower Arm movement detecting Button LT and RT
         if(driver.getAxisActive(ConfigurationService.LEFT_TRIGGER)){
-            arm.lowerMove(armLowerPower);;
+            arm.lowerMove(armLowerPower);
         }
         else if(driver.getAxisActive(ConfigurationService.RIGHT_TRIGGER))
         {
@@ -141,7 +141,7 @@ public class DriverTask
 
         //Upper Arm movement detecting RB and LB
         if(driver.getButton(ConfigurationService.BTN_RB)){
-            arm.upperMove(armUpperPower);;
+            arm.upperMove(armUpperPower);
         }
         else if(driver.getButton(ConfigurationService.BTN_LB))
         {
