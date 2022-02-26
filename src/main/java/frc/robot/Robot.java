@@ -25,11 +25,8 @@ import edu.wpi.first.wpilibj.Encoder;
 import frc.robot.lib.tools.Ultrasonic;
 import frc.robot.game2022.modules.Arm;
 import frc.robot.game2022.modules.Combine;
-
-
-import frc.robot.game2022.tasks.AutoTask;
-import frc.robot.game2022.tasks.DriverTask;
-//import frc.robot.game2022.tasks.SecondaryTask;
+import frc.robot.game2022.oldtasks.AutoTask;
+import frc.robot.game2022.oldtasks.DriverTask;
 
 // public class Robot extends TimedRobot {
 //   public Robot(){
