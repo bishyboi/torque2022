@@ -178,14 +178,14 @@ public class DriverTask
         return driver.getButton(ConfigurationService.BTN_RB);
     }
 
-    /**
-     * Checks to see if the driver wants to automatically drive to a vision target/piece dropoff
-     * @return boolean testing if Button B is pressed
-     */
-    private boolean isRunningAutoVision()
-    {
-        return driver.getButton(ConfigurationService.BTN_B);
-    }
+    // /**
+    //  * Checks to see if the driver wants to automatically drive to a vision target/piece dropoff
+    //  * @return boolean testing if Button B is pressed
+    //  */
+    // private boolean isRunningAutoVision()
+    // {
+    //     return driver.getButton(ConfigurationService.BTN_B);
+    // }
    
     // private void toggleFrontSide()
     // {
