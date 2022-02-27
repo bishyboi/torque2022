@@ -10,6 +10,8 @@ public class AutoTask {
     private Camera camera;
     private Encoder encoder;
     private Combine combine;
+
+    private double finalDistance = 36; // TODO: find distance from goal to camera after limelight is mounted
     public AutoTask(DriveTrain driveTrain, Camera camera, Encoder encoder, Combine combine)
     {
         this.driveTrain = driveTrain;
@@ -23,7 +25,11 @@ public class AutoTask {
 
 
     public void loop() {
-    
+        if (camera.getSteering_Adjust()==0&&camera.getDistance_Adjust(finalDistance)==0){
+            // push ball out
+        }else{
+            this.centerAlign();
+        }
         // double leftOutput;
         // double rightOutput;
     
@@ -50,7 +56,7 @@ public class AutoTask {
         // rightOutput = rightSpeedSetpoint;
     
         // System.out.println("Left: " + leftOutput + "    | Right: " + rightOutput);
-        // //TODO: Convert leftOutput and rightOutput into voltages or PercentOutput
+        // //T O D O: Convert leftOutput and rightOutput into voltages or PercentOutput
         // double leftPower = leftOutput;
         // double rightPower = rightOutput;
         // //Conversion takes place above ^^^^
@@ -67,9 +73,9 @@ public class AutoTask {
         double leftPower = 0;
         double rightPower = 0;
         leftPower -= camera.getSteering_Adjust();
-        leftPower -= camera.getDistance_Adjust();
+        leftPower -= camera.getDistance_Adjust(finalDistance);
         rightPower += camera.getSteering_Adjust();
-        rightPower -= camera.getDistance_Adjust();
+        rightPower -= camera.getDistance_Adjust(finalDistance);
         driveTrain.drivePercentageOutput(leftPower, rightPower);
     }
 }

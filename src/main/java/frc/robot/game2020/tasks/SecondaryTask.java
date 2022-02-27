@@ -70,7 +70,7 @@ import java.time.Clock;
 //             ballControl.runIntake(0);
 //         }
 
-//         //Color Sensor TODO: (NEEDS A SAFEGUARD IN CASE PREMATURELY PRESSED) if you try to spin when not on stage 2, warning rumble
+//         //Color Sensor T O D O: (NEEDS A SAFEGUARD IN CASE PREMATURELY PRESSED) if you try to spin when not on stage 2, warning rumble
 //         if(secondary.getButton(ConfigurationService.BTN_Y))
 //         {
 //             if(!color.completedStage2)
@@ -99,7 +99,7 @@ import java.time.Clock;
 //         }
 
 //         //autonomously deals with loading balls in the shooter of one is detected by ultrasonic
-//         //TODO: Might wanna see if we want to wait for the ball to stabalize (stop moving) first. So like,
+//         //T O D O: Might wanna see if we want to wait for the ball to stabalize (stop moving) first. So like,
 //         //a lockout period where we see the ball for 0.5s then run the motors
 //         if(ultrasonic.testBall())
 //         {

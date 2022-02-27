@@ -74,7 +74,9 @@ public class Robot extends TimedRobot {
 
     I2C.Port i2cPort = I2C.Port.kOnboard;
 
-    camera = new Camera();
+    
+    //TODO: adjust mountAngle and heightDiff when limelight is mounted on the robot
+    camera = new Camera(0,5.5);
     ultrasonic = new Ultrasonic(ConfigurationService.ULTRASONIC_PORT);
     //color = new ColorSensor(i2cPort);
     //controlSwitch = new ControlSwitch(color);

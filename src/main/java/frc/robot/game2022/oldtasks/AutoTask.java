@@ -109,7 +109,7 @@ public class AutoTask
         double curTime = timer.get();
        //double dt = curTime - prevTime;
     
-        //TODO: Pose2d should be replaced with a function that supplies a list of Pose2ds
+        //T O D O: Pose2d should be replaced with a function that supplies a list of Pose2ds
         var targetWheelSpeeds = kinematics.toWheelSpeeds(
             ramseteController.calculate(currentPose, trajectory.sample(curTime)));
     
@@ -142,7 +142,7 @@ public class AutoTask
         rightOutput = rightSpeedSetpoint;
     
         System.out.println("Left: " + leftOutput + "    | Right: " + rightOutput);
-        //TODO: Convert leftOutput and rightOutput into voltages or PercentOutput
+        //T O D O: Convert leftOutput and rightOutput into voltages or PercentOutput
         double leftPower = leftOutput;
         double rightPower = rightOutput;
         //Conversion takes place above ^^^^
@@ -174,9 +174,9 @@ public class AutoTask
         double leftPower = 0;
         double rightPower = 0;
         leftPower -= camera.getSteering_Adjust();
-        leftPower -= camera.getDistance_Adjust();
+        leftPower -= camera.getDistance_Adjust(36);
         rightPower += camera.getSteering_Adjust();
-        rightPower -= camera.getDistance_Adjust();
+        rightPower -= camera.getDistance_Adjust(36);
         driveTrain.drivePercentageOutput(leftPower, rightPower);
     }
 

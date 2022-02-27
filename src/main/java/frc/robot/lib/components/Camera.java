@@ -10,17 +10,18 @@ public class Camera
 {
     private NetworkTable table;
     private NetworkTableEntry tx, ty, ta; //x and y angle offset, ta: area of the screen the target takes up
-    
-    //TODO: adjust mountAngle heightDiff and finalDistance when limelight is mounted on the robot
     public double x,y,area;
-    private final double mountAngle = 0; //Angle the camera is mounted at. DOUBLE CHECK THIS IS ACCURATE
-    private final double heightDiff = 5.5; //Height from camera to goal. DOUBLE CHECK THIS IS ACCURATE
-    private final double finalDistance = 36; //Distance we want the camera to be from the goal. DOUBLE CHECK THIS IS ACCURATE
+    private final double mountAngle; //Angle the camera is mounted at. DOUBLE CHECK THIS IS ACCURATE
+    private final double heightDiff; //Height from camera to goal. DOUBLE CHECK THIS IS ACCURATE
     /**
      * Intializes vision
+     * @param mountAngle angle the cmaera is mounted at
+     * @param heightDiff height from camera to goal
      */
-    public Camera()
+    public Camera(double mountAngle, double heightDiff)
     {
+        this.mountAngle = mountAngle;
+        this.heightDiff = heightDiff;
         table = NetworkTableInstance.getDefault().getTable("limelight");
 
         tx = table.getEntry("tx");
@@ -67,7 +68,12 @@ public class Camera
         return (heightDiff/Math.tan(Math.toRadians(mountAngle+ty.getDouble(0.0))));
     }
     
-    public double getDistance_Adjust()
+    /**
+     * 
+     * @param finalDistance distance from camera to goal
+     * @return energy required to reach selected distance
+     */
+    public double getDistance_Adjust(double finalDistance)
     {   
         double distance_adjust;
         double kpDistance = 0.01f; //proportional gain for distance
@@ -90,7 +96,7 @@ public class Camera
     }
 
     /**
-     * @return energy required to steer
+     * @return energy required to steer to face the visible target
      */
     public double getSteering_Adjust()
     {
