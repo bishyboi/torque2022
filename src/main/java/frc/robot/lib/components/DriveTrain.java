@@ -4,7 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.ctre.phoenix.sensors.PigeonIMU;
+//import com.ctre.phoenix.sensors.PigeonIMU;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;//Mainly for debugging
 import frc.robot.lib.ConfigurationService;
 import edu.wpi.first.math.controller.PIDController;
@@ -30,8 +30,8 @@ public class DriveTrain
     private final PIDController leftPID;
     private final PIDController rightPID;
 
-    public final PigeonIMU pigeon;
-    private final double[] pigeonYPR = new double[3];
+    //public final PigeonIMU pigeon;
+    //private final double[] pigeonYPR = new double[3];
     double heading;
 
     private final int maxVoltage = 10;
@@ -51,8 +51,8 @@ public class DriveTrain
 
         this.configureTalons();
 
-        pigeon = new PigeonIMU(RightSlave);
-        heading = this.getHeading();
+        //pigeon = new PigeonIMU(RightSlave);
+        //heading = this.getHeading();
     }
 
     /**
@@ -115,11 +115,11 @@ public class DriveTrain
      *
      * @return The heading
      */
-    public double getHeading() 
-    {
-        this.pigeon.getYawPitchRoll(pigeonYPR);
-        return pigeonYPR[0];
-    }
+    //public double getHeading() 
+    //{
+    //    //this.pigeon.getYawPitchRoll(pigeonYPR);
+    //    return pigeonYPR[0];
+    //}
 
     /**
      * Zeroes out all encoders

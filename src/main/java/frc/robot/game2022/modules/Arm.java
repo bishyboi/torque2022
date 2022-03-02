@@ -33,5 +33,6 @@ public class Arm {
 
     public void upperMove(double power){
         upperMotor.set(ControlMode.PercentOutput, power);
+        //upperMotor.setVoltage(power);
     }
 }

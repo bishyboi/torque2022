@@ -11,8 +11,8 @@ import edu.wpi.first.networktables.*;
 import frc.robot.lib.components.Xbox;
 import frc.robot.lib.components.Camera;
 import java.time.Clock;
-import frc.robot.game2022.modules.Arm;
-import frc.robot.game2022.modules.Combine;
+// import frc.robot.game2022.modules.Arm;
+// import frc.robot.game2022.modules.Combine;
 
 /**
  * Created by Nick Sloss on 2/7/2017.
@@ -24,8 +24,8 @@ public class DriverTask
     
 
     private final DriveTrain driveTrain;
-    private final Arm arm;
-    private final Combine combine;
+    // private final Arm arm;
+    // private final Combine combine;
     private Camera camera;
 
     // TODO: ABSOLUTELY NEEDS TUNING
@@ -44,13 +44,13 @@ public class DriverTask
      * @param arm the arm
      * @param combine the combine :)
      */
-    public DriverTask(int port, DriveTrain driveTrain, Camera camera, Arm arm, Combine combine)
+    public DriverTask(int port, DriveTrain driveTrain, Camera camera)
     {
         this.driver = new Xbox(port);
         this.driveTrain = driveTrain;
         this.camera = camera;
-        this.arm = arm;
-        this.combine = combine;     
+        // this.arm = arm;
+        // this.combine = combine;     
     }
 
     /**
@@ -65,11 +65,6 @@ public class DriverTask
         //Add conversions to power output based on controls here
         double leftPower = left_y;
         double rightPower = right_y;
-
-        double armLowerPower = boundCap(maxVoltage);
-        double armUpperPower = boundCap(maxVoltage);
-        double intakePower = boundCap(maxVoltage);
-        double liftPower = boundCap(maxVoltage);
 
         //To make sure no side go OutOfBounds with the power and crash the code (other side is divdided to keep relative power)
         if (Math.abs(leftPower) > 1)
@@ -121,53 +116,14 @@ public class DriverTask
         SmartDashboard.putNumber("Left-Y", left_y);
         SmartDashboard.putNumber("Right-Y", right_y);
         
-        if(!driver.getButton(ConfigurationService.BTN_A))
-        {
-            driveTrain.drivePercentageOutput(leftPower, rightPower);
-        }
-        else
-        {
-            driveTrain.tankDriveWithFeedforwardPID(-leftPower, rightPower);
-        }
-
-        //Lower Arm movement detecting Button LT and RT
-        if(driver.getAxisActive(ConfigurationService.LEFT_TRIGGER)){
-            arm.lowerMove(armLowerPower);
-        }
-        else if(driver.getAxisActive(ConfigurationService.RIGHT_TRIGGER))
-        {
-            arm.lowerMove(-armLowerPower);
-        }
-
-        //Upper Arm movement detecting RB and LB
-        if(driver.getButton(ConfigurationService.BTN_RB)){
-            arm.upperMove(armUpperPower);
-        }
-        else if(driver.getButton(ConfigurationService.BTN_LB))
-        {
-            arm.upperMove(-armUpperPower);
-        }
-        
-        //moving intake motor forward & backward when A & B are pressed respectively
-        if(driver.getButton(ConfigurationService.BTN_A))
-        {
-            combine.intakeMove(intakePower);
-        }
-        else if(driver.getButton(ConfigurationService.BTN_B))
-        {
-            combine.intakeMove(-intakePower);
-        }
-        
-        //moving lift motor up & down when X & Y are pressed respectively
-        if(driver.getButton(ConfigurationService.BTN_X))
-        {
-            combine.liftMove(liftPower);
-        }
-        else if(driver.getButton(ConfigurationService.BTN_Y))
-        {
-            combine.liftMove(-liftPower);
-        }
-
+        // if(!driver.getButton(ConfigurationService.BTN_A))
+        // {
+             driveTrain.drivePercentageOutput(leftPower, rightPower);
+        // }
+        // else
+        // {
+            //driveTrain.tankDriveWithFeedforwardPID(-leftPower, rightPower);
+        //}
     }
     /**
      * Checks to see if the driver wants to slow down the drive speed of the car
@@ -223,17 +179,17 @@ public class DriverTask
      * @return -1/1 if powerOutput is less than -1/ greater than 1,
      *         powerOutput otherwise
      */
-    private double boundCap(double powerOutput)
-    {
-        if (Math.abs(powerOutput) > 1)
-        {
-            return (powerOutput/Math.abs(powerOutput));
-        }
-        else
-        {
-            return powerOutput;
-        }
-    }
+    // private double boundCap(double powerOutput)
+    // {
+    //     if (Math.abs(powerOutput) > 1)
+    //     {
+    //         return (powerOutput/Math.abs(powerOutput));
+    //     }
+    //     else
+    //     {
+    //         return powerOutput;
+    //     }
+    // }
 
     /**
      * gets the native xbox controller
@@ -253,11 +209,12 @@ public class DriverTask
             driver.setWasSlowed(true);
             driver.resetInstances();
         }
-        if(driver.getWasSlowed() && !isSlowed())
-        {
-            double holdLeftPower = leftPower;
-            leftPower = driver.accelerate(leftPower, rightPower);
-            rightPower = driver.accelerate(rightPower, holdLeftPower);
-        }
-    */
+        */
+//    if(driver.getWasSlowed() && !isSlowed())
+//        {
+//            double holdLeftPower = leftPower;
+//            leftPower = driver.accelerate(leftPower, rightPower);
+ //           rightPower = driver.accelerate(rightPower, holdLeftPower);
+//        }
+    
 }
