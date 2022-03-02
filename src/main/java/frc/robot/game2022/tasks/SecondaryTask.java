@@ -103,6 +103,7 @@ public class SecondaryTask {
         SmartDashboard.putNumber("Upper arm power", armUpperPower);
         SmartDashboard.putNumber("Lower arm power", armLowerPower);
 
+        //TODO: these motor voltage lines crash the code for some unknown reason
         /*
         this.arm.lowerMove(armLowerPower);
         this.arm.upperMove(armUpperPower);
