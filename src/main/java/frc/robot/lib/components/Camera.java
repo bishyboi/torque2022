@@ -71,15 +71,16 @@ public class Camera
     /**
      * 
      * @param finalDistance distance from camera to goal
+     * @param errorMargin error margin
      * @return energy required to reach selected distance
      */
-    public double getDistance_Adjust(double finalDistance)
+    public double getDistance_Adjust(double finalDistance, double errorMargin)
     {   
         double distance_adjust;
         double kpDistance = 0.01f; //proportional gain for distance
         double distance_error = calculateDistance() - finalDistance;
         
-        if (distance_error <= 0)
+        if (Math.abs(distance_error) <= errorMargin)
         {
             distance_adjust = 0;
         }
@@ -96,9 +97,10 @@ public class Camera
     }
 
     /**
+     * @param errorMargin degrees of error tolerated
      * @return energy required to steer to face the visible target
      */
-    public double getSteering_Adjust()
+    public double getSteering_Adjust(double errorMargin)
     {
         double steering_adjust = 0.0;
         double kpSteering = 0.015f;
@@ -106,7 +108,7 @@ public class Camera
         //-0.02 kP, 0.08f <--- pretty optimal numbers
         double heading_error = tx.getDouble(0.0);
         
-        if (heading_error > 1.0)
+        if (heading_error > errorMargin)
         {
             steering_adjust = kpSteering*heading_error + min_command;
         }
@@ -114,7 +116,7 @@ public class Camera
         {
             steering_adjust = 0;
         }
-        else if (heading_error < 1.0)
+        else if (heading_error < errorMargin)
         {
             steering_adjust = kpSteering*heading_error - min_command;
         }
