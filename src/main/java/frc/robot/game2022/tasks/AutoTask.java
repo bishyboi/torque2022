@@ -2,89 +2,72 @@ package frc.robot.game2022.tasks;
 
 import frc.robot.lib.components.DriveTrain;
 import frc.robot.lib.components.Camera;
-import edu.wpi.first.wpilibj.Encoder;
 import frc.robot.game2022.modules.Combine;
 
 public class AutoTask {
     private DriveTrain driveTrain;
     private Camera camera;
-    private Encoder encoder;
     private Combine combine;
 
-    private double finalDistance = 36; // TODO: find distance from goal to camera after limelight is mounted
-    public AutoTask(DriveTrain driveTrain, Camera camera, Encoder encoder, Combine combine)
+    private final double errorMargin = 3;
+    private final double alignmentError = 1;
+    private final double shootingDistance = 36; // TODO: find distance from reflective tape to camera after limelight is mounted
+    private final double exitDistance = 130;
+    private final double intakePower = 0;
+    private int phase = 1;
+    private int count = 0; // timer by counting
+    public AutoTask(DriveTrain driveTrain, Camera camera, Combine combine)
     {
         this.driveTrain = driveTrain;
         this.camera = camera;
-        this.encoder = encoder;
         this.combine = combine;
     }
 
     public void initialize() {
     }
 
-
-    public void loop() {
-        if (camera.getSteering_Adjust()==0&&camera.getDistance_Adjust(finalDistance)==0){
-            // push ball out
-        }else{
-            this.centerAlign();
-        }
-        // double leftOutput;
-        // double rightOutput;
-    
-        // /*
-        // if (m_usePID) {
-        //   double leftFeedforward =
-        //       m_feedforward.calculate(leftSpeedSetpoint,
-        //           (leftSpeedSetpoint - m_prevSpeeds.leftMetersPerSecond) / dt);
-    
-        //   double rightFeedforward =
-        //       m_feedforward.calculate(rightSpeedSetpoint,
-        //           (rightSpeedSetpoint - m_prevSpeeds.rightMetersPerSecond) / dt);
-    
-        //   leftOutput = leftFeedforward
-        //       + m_leftController.calculate(m_speeds.get().leftMetersPerSecond,
-        //       leftSpeedSetpoint);
-    
-        //   rightOutput = rightFeedforward
-        //       + m_rightController.calculate(m_speeds.get().rightMetersPerSecond,
-        //       rightSpeedSetpoint);
-        // } else {}
-        //     */
-        // leftOutput = leftSpeedSetpoint;
-        // rightOutput = rightSpeedSetpoint;
-    
-        // System.out.println("Left: " + leftOutput + "    | Right: " + rightOutput);
-        // //T O D O: Convert leftOutput and rightOutput into voltages or PercentOutput
-        // double leftPower = leftOutput;
-        // double rightPower = rightOutput;
-        // //Conversion takes place above ^^^^
-        
-        // driveTrain.driveVoltageOutput(leftPower, rightPower);
-
-        // prevTime = curTime;
-        // this.update();
-        // //prevSpeeds = targetWheelSpeeds;   <--- For PID
+    public void setPhase (int phase){
+        this.phase = phase;
+    }
+    public void setCount (int count){
+        this.count = count;
     }
 
-    public void centerAlign()
+    public void loop() {
+        switch(phase){
+            case 1: // phase 1: move to shooting location
+                combine.intakeMove(intakePower);
+                this.centerAlign(shootingDistance, errorMargin);
+                if (camera.getSteering_Adjust(alignmentError)==0&&camera.getDistance_Adjust(shootingDistance, errorMargin)==0){
+                    phase++;
+                }
+            break;
+            case 2: // phase 2: shoot
+                count++;
+                combine.intakeMove(-intakePower);
+                if(count >= 100){
+                    phase++;
+                }
+            break;
+            case 3: // phase 3: move out
+                combine.intakeMove(intakePower);
+                this.centerAlign(exitDistance, errorMargin);
+            break;
+        }
+    }
+
+    /**
+     * align the robot to a reflective tape at a distance
+     * @param distance distance we need to be from the reflective tape
+     */
+    public void centerAlign(double distance, double error)
     {
         double leftPower = 0;
         double rightPower = 0;
-        leftPower -= camera.getSteering_Adjust();
-        leftPower -= camera.getDistance_Adjust(finalDistance);
-        rightPower += camera.getSteering_Adjust();
-        rightPower -= camera.getDistance_Adjust(finalDistance);
+        leftPower -= camera.getSteering_Adjust(alignmentError);
+        leftPower -= camera.getDistance_Adjust(distance, error);
+        rightPower += camera.getSteering_Adjust(alignmentError);
+        rightPower -= camera.getDistance_Adjust(distance, error);
         driveTrain.drivePercentageOutput(leftPower, rightPower);
     }
 }
-/*
-point to reflective tape and move to hub
-    AutoTask.centerAlign()
-drop ball
-    Combine.dropBall()
-move out
-    move (double distance)
-(find ball maybe)
-*/
