@@ -14,8 +14,10 @@ public class AutoTask {
     private final double shootingDistance = 36; // TODO: find distance from reflective tape to camera after limelight is mounted
     private final double exitDistance = 130;
     private final double intakePower = 0;
+
     private int phase = 1;
     private int count = 0; // timer by counting
+
     public AutoTask(DriveTrain driveTrain, Camera camera, Combine combine)
     {
         this.driveTrain = driveTrain;
@@ -29,29 +31,39 @@ public class AutoTask {
     public void setPhase (int phase){
         this.phase = phase;
     }
+
     public void setCount (int count){
         this.count = count;
     }
 
     public void loop() {
+
         switch(phase){
+
             case 1: // phase 1: move to shooting location
                 combine.intakeMove(intakePower);
                 this.centerAlign(shootingDistance, errorMargin);
-                if (camera.getSteering_Adjust(alignmentError)==0&&camera.getDistance_Adjust(shootingDistance, errorMargin)==0){
+
+                if( (camera.getSteering_Adjust(alignmentError)==0) &&  (camera.getDistance_Adjust(shootingDistance, errorMargin)==0)){
                     phase++;
                 }
+
             break;
+
             case 2: // phase 2: shoot
                 count++;
                 combine.intakeMove(-intakePower);
+
                 if(count >= 100){
                     phase++;
                 }
+
             break;
+
             case 3: // phase 3: move out
                 combine.intakeMove(intakePower);
                 this.centerAlign(exitDistance, errorMargin);
+
             break;
         }
     }
@@ -64,10 +76,12 @@ public class AutoTask {
     {
         double leftPower = 0;
         double rightPower = 0;
+
         leftPower -= camera.getSteering_Adjust(alignmentError);
         leftPower -= camera.getDistance_Adjust(distance, error);
         rightPower += camera.getSteering_Adjust(alignmentError);
         rightPower -= camera.getDistance_Adjust(distance, error);
+
         driveTrain.drivePercentageOutput(leftPower, rightPower);
     }
 }
