@@ -20,7 +20,7 @@ public class SecondaryTask {
     private final Arm arm;
     private final Combine combine;
 
-    private final double maxVoltage = 2.0;
+    private final double powerPercent = 0.9;
 
     
     private double armLowerPower;
@@ -44,11 +44,11 @@ public class SecondaryTask {
     {
         //Lower Arm movement detecting Button LT and RT
         if(driver.getAxisActive(ConfigurationService.LEFT_TRIGGER)){
-            this.armLowerPower = boundCap(maxVoltage);
+            this.armLowerPower = boundCap(powerPercent);
         }
         else if(driver.getAxisActive(ConfigurationService.RIGHT_TRIGGER))
         {
-            this.armLowerPower = boundCap(-maxVoltage);
+            this.armLowerPower = boundCap(-powerPercent);
         }
         else
         {
@@ -57,11 +57,11 @@ public class SecondaryTask {
         
         //Upper Arm movement detecting RB and LB
         if(driver.getButton(ConfigurationService.BTN_RB)){
-            this.armUpperPower = boundCap(maxVoltage);
+            this.armUpperPower = boundCap(powerPercent);
         }
         else if(driver.getButton(ConfigurationService.BTN_LB))
         {
-            this.armUpperPower = boundCap(-maxVoltage);
+            this.armUpperPower = boundCap(-powerPercent);
         }
         else
         {
@@ -71,11 +71,11 @@ public class SecondaryTask {
         //moving intake motor forward & backward when A & B are pressed respectively
         if(driver.getButton(ConfigurationService.BTN_A))
         {
-            this.intakePower = boundCap(maxVoltage);
+            this.intakePower =  boundCap(powerPercent);
         }
         else if(driver.getButton(ConfigurationService.BTN_B))
         {
-            this.intakePower = boundCap(-maxVoltage);
+            this.intakePower = boundCap(-powerPercent);
         }
         else
         {
@@ -85,11 +85,11 @@ public class SecondaryTask {
         //moving lift motor up & down when X & Y are pressed respectively
         if(driver.getButton(ConfigurationService.BTN_X))
         {
-            this.liftPower = boundCap(maxVoltage);
+            this.liftPower = boundCap(powerPercent);
         }
         else if(driver.getButton(ConfigurationService.BTN_Y))
         {
-            this.liftPower = boundCap(-maxVoltage);
+            this.liftPower = boundCap(-powerPercent);
         }
         else
         {
@@ -103,7 +103,7 @@ public class SecondaryTask {
         SmartDashboard.putNumber("Upper arm power", armUpperPower);
         SmartDashboard.putNumber("Lower arm power", armLowerPower);
 
-        //TODO: these motor voltage lines crash the code for some unknown reason
+        //TODO: these motor voltage lines crash the code for some unknown reason [Bishoy thinks its because the maxVoltage is greater than 1.0, crashing the code because PercentOutput only works from -1.0-1.0, with 0.0 as neutral]
         /*
         this.arm.lowerMove(armLowerPower);
         this.arm.upperMove(armUpperPower);
