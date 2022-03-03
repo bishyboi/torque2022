@@ -7,7 +7,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import frc.robot.lib.ConfigurationService;
 import frc.robot.lib.components.DriveTrain;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.networktables.*;
 import frc.robot.lib.components.Xbox;
 import frc.robot.lib.components.Camera;
 import java.time.Clock;
@@ -20,6 +19,11 @@ public class SecondaryTask {
     private final Arm arm;
     private final Combine combine;
 
+    /*
+    Controls the percent of maximum power that a motor can output using talon.set(ControlMode.PercentOutput, power)
+    This is a static amount that controls how fast each of the secondary motors will move, 
+    adjust between 0.1-1.0 to speed up and slow down the power of the secondary motors
+    */
     private final double powerPercent = 0.9;
 
     
@@ -37,7 +41,7 @@ public class SecondaryTask {
 
     /**
      * for every motor (intake, lift, upper arm, lower arm)
-     * sets voltage to boundCap(maxVoltage) or boundCap(-maxVoltage)
+     * sets voltage to boundCap(powerPercent) or boundCap(-powerPercent)
      */
 
     public void teleop()

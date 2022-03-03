@@ -177,9 +177,8 @@ public class Robot extends TimedRobot {
       // controlSwitch.updateColorChar(DriverStation.getGameSpecificMessage().charAt(0));
     }
 
-    
+    driver.teleop();    
     secondary.teleop();
-    driver.teleop();
   }
 
   /**
