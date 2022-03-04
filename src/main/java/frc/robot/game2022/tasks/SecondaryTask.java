@@ -1,9 +1,7 @@
 package frc.robot.game2022.tasks;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 //import com.revrobotics.Config;
 //import com.revrobotics.*;
-
 import frc.robot.lib.ConfigurationService;
 import frc.robot.lib.components.DriveTrain;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -12,7 +10,6 @@ import frc.robot.lib.components.Camera;
 import java.time.Clock;
 import frc.robot.game2022.modules.Arm;
 import frc.robot.game2022.modules.Combine;
-
 public class SecondaryTask {
 
     private final Xbox driver;
@@ -25,7 +22,6 @@ public class SecondaryTask {
     adjust between 0.1-1.0 to speed up and slow down the power of the secondary motors
     */
     private final double powerPercent = 0.9;
-
     
     private double armLowerPower;
     private double armUpperPower;
@@ -43,7 +39,6 @@ public class SecondaryTask {
      * for every motor (intake, lift, upper arm, lower arm)
      * sets voltage to boundCap(powerPercent) or boundCap(-powerPercent)
      */
-
     public void teleop()
     {
         //Lower Arm movement detecting Button LT and RT
@@ -55,10 +50,10 @@ public class SecondaryTask {
             this.armLowerPower = boundCap(-powerPercent);
         }
         else
-        {
+        {      
             this.armLowerPower = 0.0;
         }
-        
+
         //Upper Arm movement detecting RB and LB
         if(driver.getButton(ConfigurationService.BTN_RB)){
             this.armUpperPower = boundCap(powerPercent);
@@ -96,27 +91,24 @@ public class SecondaryTask {
             this.liftPower = boundCap(-powerPercent);
         }
         else
-        {
+        { 
             this.liftPower = 0.0;
         }
-
 
 
         SmartDashboard.putNumber("Lift Power", liftPower);
         SmartDashboard.putNumber("Intake Power", intakePower);
         SmartDashboard.putNumber("Upper arm power", armUpperPower);
         SmartDashboard.putNumber("Lower arm power", armLowerPower);
-
         //TODO: these motor voltage lines crash the code for some unknown reason [Bishoy thinks its because the maxVoltage is greater than 1.0, crashing the code because PercentOutput only works from -1.0-1.0, with 0.0 as neutral]
-        
+
         this.arm.lowerMove(armLowerPower);
         this.arm.upperMove(armUpperPower);
-        
+             
         this.combine.intakeMove(intakePower);
         this.combine.liftMove(liftPower);
-        
-    }
 
+    }
     /**
      * 
      * @param powerOutput
@@ -132,11 +124,9 @@ public class SecondaryTask {
         // else
         // {
         //     return powerOutput;
-
         return powerOutput; //TODO: Replace this code with what is commented out
         
     }
-
     public Xbox getDriver()
     {
         return driver;

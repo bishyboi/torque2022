@@ -37,9 +37,6 @@ import frc.robot.game2022.tasks.SecondaryTask;
 // }
 
 
-
-
-
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the TimedRobot
@@ -53,7 +50,6 @@ public class Robot extends TimedRobot {
   List<Translation2d> choosenPath;
   Pose2d startPose;
   Pose2d finalPose;
-
   DriverTask driver;
   SecondaryTask secondary;
   //OldAutoTask auto;
@@ -72,26 +68,19 @@ public class Robot extends TimedRobot {
     chooser.setDefaultOption("Straight", "Straight");
     chooser.addOption("S-Curve", "S-Curve");
     SmartDashboard.putData("Auto Paths", chooser);
-
     I2C.Port i2cPort = I2C.Port.kOnboard;
-
     
     //TODO: adjust mountAngle and heightDiff when limelight is mounted on the robot
     camera = new Camera(0,5.5);
     ultrasonic = new Ultrasonic(ConfigurationService.ULTRASONIC_PORT);
     //color = new ColorSensor(i2cPort);
     //controlSwitch = new ControlSwitch(color);
-
     driveTrain = new DriveTrain();
-
     //auto = new AutoTask(driveTrain, camera);
     driver = new DriverTask(0, driveTrain, camera);
     secondary = new SecondaryTask(1, arm, combine);
     
-
   }
-
-
   /**
    * This function is called every robot packet, no matter the mode. Use
    * this for items like diagnostics that you want ran during disabled,
@@ -105,7 +94,6 @@ public class Robot extends TimedRobot {
   {
     
   }
-
   /**
    * This autonomous (along with the chooser code above) shows how to select
    * between different autonomous modes using the dashboard. The sendable
@@ -142,33 +130,27 @@ public class Robot extends TimedRobot {
         finalPose = new Pose2d(0, 0, new Rotation2d(0));
         break;
     }
-
     //auto.initialize(startPose, finalPose, choosenPath);
     camera.setDriverMode(false);
   }
-
   /**
    * This function is called periodically during autonomous.
    */
   @Override
   public void autonomousPeriodic() {
-
     //auto.loop();
     SmartDashboard.putNumber("X offset", camera.getxOffset());
   }
-
   @Override
 	public void teleopInit() 
 	{
     camera.setDriverMode(true);
 	}
-
   /**
    * This function is called periodically during operator control.
    */
   @Override
   public void teleopPeriodic() {
-
     ultrasonic.testBall(); //probably also outdated
     
     //Once the field has decided the color, set everything up for it outdated, for 2020
@@ -176,11 +158,9 @@ public class Robot extends TimedRobot {
     {
       // controlSwitch.updateColorChar(DriverStation.getGameSpecificMessage().charAt(0));
     }
-
     driver.teleop();    
     secondary.teleop();
   }
-
   /**
    * This function is called periodically during test mode.
    */
@@ -189,13 +169,11 @@ public class Robot extends TimedRobot {
   {
     //auto.centerAlign();
   }
-
   @Override
 	public void disabledInit()
 	{
    
 	}
-
 	@Override
 	public void disabledPeriodic()
 	{
