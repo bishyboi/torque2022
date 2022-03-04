@@ -28,13 +28,8 @@ public class DriverTask
     // private final Combine combine;
     private Camera camera;
 
-<<<<<<< HEAD
-    
-    private final int maxVoltage =10; 
-=======
     // TODO: ABSOLUTELY NEEDS TUNING
     private final double maxVoltage = 1.0; 
->>>>>>> 5c685fe1a6554ff031de0785af944a837f4b9d80
     
     Clock clock;
     private final long lockoutPeriod = 500;//in milliseconds 0.001s
@@ -71,19 +66,6 @@ public class DriverTask
         double leftPower = left_y;
         double rightPower = right_y;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-        double armLowerPower = maxVoltage/2;
-        double armUpperPower = maxVoltage/2;
-=======
-        double armLowerPower = boundCap(maxVoltage);
-        double armUpperPower = boundCap(maxVoltage);
-        double intakePower = boundCap(maxVoltage);
-        double liftPower = boundCap(maxVoltage);
->>>>>>> 5c685fe1a6554ff031de0785af944a837f4b9d80
-
-=======
->>>>>>> 2f767f9563c4f35e62f6c2a0ead4c78474808f3b
         //To make sure no side go OutOfBounds with the power and crash the code (other side is divdided to keep relative power)
         if (Math.abs(leftPower) > 1)
         {
