@@ -7,34 +7,17 @@
 
 package frc.robot;
 
-import java.util.List;
-
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 
 import frc.robot.lib.ConfigurationService;
 import frc.robot.lib.components.Camera; 
 import frc.robot.lib.components.DriveTrain;
-import edu.wpi.first.wpilibj.Encoder;
-import frc.robot.lib.tools.Ultrasonic;
 import frc.robot.game2022.modules.Arm;
 import frc.robot.game2022.modules.Combine;
-//import frc.robot.game2022.oldtasks.OldAutoTask;
 import frc.robot.game2022.tasks.DriverTask;
 import frc.robot.game2022.tasks.SecondaryTask;
-
-// public class Robot extends TimedRobot {
-//   public Robot(){
-//     // lib/ConfigurationService.java has motor port numbers
-//     Motortest motorTest = new Motortest(ConfigurationService.Tester); // test motor connected to port 0
-//   }
-// }
 
 
 /**
@@ -45,17 +28,11 @@ import frc.robot.game2022.tasks.SecondaryTask;
  * project.
  */
 public class Robot extends TimedRobot {
-  private String autoSelected;
-  private final SendableChooser<String> chooser = new SendableChooser<>();
-  List<Translation2d> choosenPath;
-  Pose2d startPose;
-  Pose2d finalPose;
   DriverTask driver;
   SecondaryTask secondary;
   //OldAutoTask auto;
   DriveTrain driveTrain;
   Camera camera;
-  Ultrasonic ultrasonic;
   Arm arm = new Arm();
   Combine combine = new Combine();
 
@@ -65,16 +42,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    chooser.setDefaultOption("Straight", "Straight");
-    chooser.addOption("S-Curve", "S-Curve");
-    SmartDashboard.putData("Auto Paths", chooser);
-    I2C.Port i2cPort = I2C.Port.kOnboard;
     
     //TODO: adjust mountAngle and heightDiff when limelight is mounted on the robot
     camera = new Camera(0,5.5);
-    ultrasonic = new Ultrasonic(ConfigurationService.ULTRASONIC_PORT);
-    //color = new ColorSensor(i2cPort);
-    //controlSwitch = new ControlSwitch(color);
     driveTrain = new DriveTrain();
     //auto = new AutoTask(driveTrain, camera);
     driver = new DriverTask(0, driveTrain, camera);
@@ -107,30 +77,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    autoSelected = chooser.getSelected();
-    //m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
-    System.out.println("Path selected: " + autoSelected);
-    switch (autoSelected) {
-      case "Straight":
-        //Path for going straight...
-        choosenPath.add(new Translation2d(3,0));
-        startPose = new Pose2d(0, 0, new Rotation2d(0));
-        finalPose = new Pose2d(3, 0, new Rotation2d(0));
-        break;
-      case "S-Curve":
-        choosenPath.add(new Translation2d(1,1));
-        choosenPath.add(new Translation2d(2,-1));
-        startPose = new Pose2d(0, 0, new Rotation2d(0));
-        finalPose = new Pose2d(3, 0, new Rotation2d(0));
-        break;
-      default:
-        //a default path
-        choosenPath.add(new Translation2d(0,0));
-        startPose = new Pose2d(0, 0, new Rotation2d(0));
-        finalPose = new Pose2d(0, 0, new Rotation2d(0));
-        break;
-    }
-    //auto.initialize(startPose, finalPose, choosenPath);
     camera.setDriverMode(false);
   }
   /**
@@ -138,7 +84,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    //auto.loop();
+    //auto.loop(); //TODO: Add in the loop method in AutoTask.java
     SmartDashboard.putNumber("X offset", camera.getxOffset());
   }
   @Override
@@ -151,13 +97,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    ultrasonic.testBall(); //probably also outdated
-    
-    //Once the field has decided the color, set everything up for it outdated, for 2020
-    if(DriverStation.getGameSpecificMessage().length() > 0)
-    {
-      // controlSwitch.updateColorChar(DriverStation.getGameSpecificMessage().charAt(0));
-    }
     driver.teleop();    
     secondary.teleop();
   }
@@ -167,7 +106,7 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic()
   {
-    //auto.centerAlign();
+
   }
   @Override
 	public void disabledInit()
