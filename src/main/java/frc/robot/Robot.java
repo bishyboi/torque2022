@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 import frc.robot.lib.ConfigurationService;
 import frc.robot.lib.components.Camera; 
@@ -29,6 +30,10 @@ import frc.robot.game2022.tasks.SecondaryTask;
  * project.
  */
 public class Robot extends TimedRobot {
+  private String autoSelected;
+  private final SendableChooser<String> chooser = new SendableChooser<>();
+
+
   DriverTask driver;
   SecondaryTask secondary;
   AutoTask auto;
@@ -43,15 +48,20 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+
+    chooser.setDefaultOption("Straight", "Straight");
+    chooser.addOption("S-Curve", "S-Curve");
+    SmartDashboard.putData("Auto Paths", chooser);
+
+
     //TODO: adjust mountAngle and heightDiff when limelight is mounted on the robot
     camera = new Camera(0,5.5);
     driveTrain = new DriveTrain();
-    //auto = new AutoTask(driveTrain, camera);
     driver = new DriverTask(0, driveTrain, camera);
     secondary = new SecondaryTask(1, arm, combine);
     auto = new AutoTask(driveTrain, camera, combine);
-    
   }
+
   /**
    * This function is called every robot packet, no matter the mode. Use
    * this for items like diagnostics that you want ran during disabled,
@@ -65,6 +75,7 @@ public class Robot extends TimedRobot {
   {
     
   }
+
   /**
    * This autonomous (along with the chooser code above) shows how to select
    * between different autonomous modes using the dashboard. The sendable
@@ -78,6 +89,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    autoSelected = chooser.getSelected();
+    System.out.println("Path selected: " + autoSelected);
     camera.setDriverMode(false);
   }
   /**
