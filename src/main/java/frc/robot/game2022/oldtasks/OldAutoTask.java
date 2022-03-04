@@ -1,6 +1,7 @@
-// package frc.robot.game2020.tasks;
+// package frc.robot.game2022.oldtasks;
 
 // import java.util.List;
+
 
 // import frc.robot.lib.components.DriveTrain;
 // import frc.robot.lib.components.Camera;
@@ -24,7 +25,7 @@
 
 // import edu.wpi.first.wpilibj2.command.RamseteCommand;
 
-// public class AutoTask
+// public class OldAutoTask
 // {
 
 //     //REPLACE THESE FROM FRC-CHARACTERIZATION
@@ -32,12 +33,10 @@
 //     public static final double kvVolts = 1.98;//SecondsPerMeter         | Velocity
 //     public static final double kaVolts = 0.2;//SecondsSquaredPerMeter   | Acceleration
 //     public static final double kPDriveVel = 8.5;
-//     //RAAAAAG
 
 //     //SET THESE TO WHAT WE WANT THEM TO BE
 //     public static final double maxVelocity = 10; //MetersPerSecond
 //     public static final double maxAcceleration = 10;//MetersPerSecondSquared
-//     //Quackamoles
 
 //     //Given by the example, I'll trust this works
 //     public static final double kRamseteB = 2;
@@ -46,8 +45,8 @@
 //     private final double driveTrainWidth = 23.8; //Width between wheels from end to end (from middle to middle is 23.0)
 //     private DriveTrain driveTrain;
 //     private Camera camera;
-//     private DifferentialDriveKinematics kinematics;
-//     private DifferentialDriveOdometry odometry;
+//     private DifferentialDriveKinematics kinematics; //help change chassis-speed to individual wheel speed
+//     private DifferentialDriveOdometry odometry; //helps estimate position and orientation
 //     private Pose2d currentPose;
 //     private Rotation2d gyroAngle;
 //     private final Timer timer = new Timer();
@@ -67,11 +66,11 @@
 //     double leftPower = 0;
 //     double rightPower = 0;  
 
-//     public AutoTask(DriveTrain driveTrain, Camera camera)
+//     public OldAutoTask(DriveTrain driveTrain, Camera camera)
 //     {
 //         this.driveTrain = driveTrain;
 //         this.camera = camera;
-//         gyroAngle = Rotation2d.fromDegrees(driveTrain.getHeading());
+//         gyroAngle = Rotation2d.fromDegrees(0);
 //         kinematics = new DifferentialDriveKinematics(Units.inchesToMeters(driveTrainWidth));
 //         odometry = new DifferentialDriveOdometry(gyroAngle);        
 //     }
@@ -102,7 +101,6 @@
 //             m_rightController.reset();
 //         }   
 //         */
-
 //     }
 
 
@@ -159,7 +157,7 @@
 
 //     public void update()
 //     {
-//         gyroAngle = Rotation2d.fromDegrees(-driveTrain.getHeading());//it's negative b/c Rotation2d uses a unit circle, but gyros have right = Positive
+//         gyroAngle = Rotation2d.fromDegrees(0);//it's negative b/c Rotation2d uses a unit circle, but gyros have right = Positive
 //         currentPose = odometry.update(gyroAngle, driveTrain.getLeftPos(), driveTrain.getRightPos());//Distance NEEDS TO BE IN METERS
 //     }
 
@@ -176,12 +174,26 @@
 //         double leftPower = 0;
 //         double rightPower = 0;
 //         leftPower -= camera.getSteering_Adjust();
-//         leftPower -= camera.getDistance_Adjust();
+//         leftPower -= camera.getDistance_Adjust(36);
 //         rightPower += camera.getSteering_Adjust();
-//         rightPower -= camera.getDistance_Adjust();
+//         rightPower -= camera.getDistance_Adjust(36);
 //         driveTrain.drivePercentageOutput(leftPower, rightPower);
 //     }
 
+//     public double getCircumference(double radius){ //2*pi*r for lazy ppl
+//         return Math.PI*radius*2;
+//     }
 
-
+//     public double getDisplacement(double revolutions, double radius){ 
+//         return revolutions*getCircumference(radius);
+//     }
 // }
+// /*
+// point to reflective tape and move to hub
+//     AutoTask.centerAlign()
+// drop ball
+//     Combine.dropBall()
+// move out
+//     move (double distance)
+// (find ball maybe)
+// */

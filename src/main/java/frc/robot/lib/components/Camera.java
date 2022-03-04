@@ -10,17 +10,18 @@ public class Camera
 {
     private NetworkTable table;
     private NetworkTableEntry tx, ty, ta; //x and y angle offset, ta: area of the screen the target takes up
-    
-    //TODO: adjust mountAngle heightDiff and finalDistance when limelight is mounted on the robot
     public double x,y,area;
-    private final double mountAngle = 0; //Angle the camera is mounted at. DOUBLE CHECK THIS IS ACCURATE
-    private final double heightDiff = 5.5; //Height from camera to goal. DOUBLE CHECK THIS IS ACCURATE
-    private final double finalDistance = 36; //Distance we want the camera to be from the goal. DOUBLE CHECK THIS IS ACCURATE
+    private final double mountAngle; //Angle the camera is mounted at. DOUBLE CHECK THIS IS ACCURATE
+    private final double heightDiff; //Height from camera to goal. DOUBLE CHECK THIS IS ACCURATE
     /**
      * Intializes vision
+     * @param mountAngle angle the cmaera is mounted at
+     * @param heightDiff height from camera to goal
      */
-    public Camera()
+    public Camera(double mountAngle, double heightDiff)
     {
+        this.mountAngle = mountAngle;
+        this.heightDiff = heightDiff;
         table = NetworkTableInstance.getDefault().getTable("limelight");
 
         tx = table.getEntry("tx");
@@ -67,13 +68,19 @@ public class Camera
         return (heightDiff/Math.tan(Math.toRadians(mountAngle+ty.getDouble(0.0))));
     }
     
-    public double getDistance_Adjust()
+    /**
+     * 
+     * @param finalDistance distance from camera to goal
+     * @param errorMargin error margin
+     * @return energy required to reach selected distance
+     */
+    public double getDistance_Adjust(double finalDistance, double errorMargin)
     {   
         double distance_adjust;
         double kpDistance = 0.01f; //proportional gain for distance
         double distance_error = calculateDistance() - finalDistance;
         
-        if (distance_error <= 0)
+        if (Math.abs(distance_error) <= errorMargin)
         {
             distance_adjust = 0;
         }
@@ -90,9 +97,10 @@ public class Camera
     }
 
     /**
-     * @return energy required to steer
+     * @param errorMargin degrees of error tolerated
+     * @return energy required to steer to face the visible target
      */
-    public double getSteering_Adjust()
+    public double getSteering_Adjust(double errorMargin)
     {
         double steering_adjust = 0.0;
         double kpSteering = 0.015f;
@@ -100,7 +108,7 @@ public class Camera
         //-0.02 kP, 0.08f <--- pretty optimal numbers
         double heading_error = tx.getDouble(0.0);
         
-        if (heading_error > 1.0)
+        if (heading_error > errorMargin)
         {
             steering_adjust = kpSteering*heading_error + min_command;
         }
@@ -108,7 +116,7 @@ public class Camera
         {
             steering_adjust = 0;
         }
-        else if (heading_error < 1.0)
+        else if (heading_error < errorMargin)
         {
             steering_adjust = kpSteering*heading_error - min_command;
         }

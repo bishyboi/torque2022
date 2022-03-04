@@ -25,8 +25,9 @@ import edu.wpi.first.wpilibj.Encoder;
 import frc.robot.lib.tools.Ultrasonic;
 import frc.robot.game2022.modules.Arm;
 import frc.robot.game2022.modules.Combine;
-import frc.robot.game2022.oldtasks.AutoTask;
-import frc.robot.game2022.oldtasks.DriverTask;
+//import frc.robot.game2022.oldtasks.OldAutoTask;
+import frc.robot.game2022.tasks.DriverTask;
+import frc.robot.game2022.tasks.SecondaryTask;
 
 // public class Robot extends TimedRobot {
 //   public Robot(){
@@ -54,8 +55,8 @@ public class Robot extends TimedRobot {
   Pose2d finalPose;
 
   DriverTask driver;
-  //SecondaryTask secondary;
-  AutoTask auto;
+  SecondaryTask secondary;
+  //OldAutoTask auto;
   DriveTrain driveTrain;
   Camera camera;
   Ultrasonic ultrasonic;
@@ -74,16 +75,18 @@ public class Robot extends TimedRobot {
 
     I2C.Port i2cPort = I2C.Port.kOnboard;
 
-    camera = new Camera();
+    
+    //TODO: adjust mountAngle and heightDiff when limelight is mounted on the robot
+    camera = new Camera(0,5.5);
     ultrasonic = new Ultrasonic(ConfigurationService.ULTRASONIC_PORT);
     //color = new ColorSensor(i2cPort);
     //controlSwitch = new ControlSwitch(color);
 
     driveTrain = new DriveTrain();
 
-    auto = new AutoTask(driveTrain, camera);
-    driver = new DriverTask(0, driveTrain, camera, arm, combine);
-    // secondary = new SecondaryTask(1, camera, ultrasonic);
+    //auto = new AutoTask(driveTrain, camera);
+    driver = new DriverTask(0, driveTrain, camera);
+    secondary = new SecondaryTask(1, arm, combine);
     
 
   }
@@ -140,7 +143,7 @@ public class Robot extends TimedRobot {
         break;
     }
 
-    auto.initialize(startPose, finalPose, choosenPath);
+    //auto.initialize(startPose, finalPose, choosenPath);
     camera.setDriverMode(false);
   }
 
@@ -150,7 +153,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
 
-    auto.loop();
+    //auto.loop();
     SmartDashboard.putNumber("X offset", camera.getxOffset());
   }
 
@@ -173,7 +176,9 @@ public class Robot extends TimedRobot {
     {
       // controlSwitch.updateColorChar(DriverStation.getGameSpecificMessage().charAt(0));
     }
-    driver.teleop();
+
+    driver.teleop();    
+    secondary.teleop();
   }
 
   /**
@@ -182,7 +187,7 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic()
   {
-    auto.centerAlign();
+    //auto.centerAlign();
   }
 
   @Override

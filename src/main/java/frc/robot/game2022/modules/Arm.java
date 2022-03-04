@@ -13,7 +13,6 @@ import frc.robot.lib.components.Camera;
 import java.time.Clock;
 
 public class Arm {
-    //TODO: make the entire climbing task :)
 
     //Motors that refer to the lower and upper parts of the hanging arm motor
     public final WPI_TalonSRX lowerMotor;
@@ -33,5 +32,6 @@ public class Arm {
 
     public void upperMove(double power){
         upperMotor.set(ControlMode.PercentOutput, power);
+        //upperMotor.setVoltage(power);
     }
 }

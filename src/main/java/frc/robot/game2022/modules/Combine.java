@@ -27,9 +27,11 @@ public class Combine {
 
     public void intakeMove(double power){
         intakeMotor.set(ControlMode.PercentOutput, power);
+        //intakeMotor.setVoltage(power);
     }
 
     public void liftMove(double power){
         liftMotor.set(ControlMode.PercentOutput, power);
+        //intakeMotor.setVoltage(power);
     }
 }

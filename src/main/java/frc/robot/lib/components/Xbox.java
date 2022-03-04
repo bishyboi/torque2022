@@ -53,14 +53,7 @@ public class Xbox
 
     public boolean getAxisActive(int axisPort)
     {
-        if (this.getAxis(axisPort)>0.1)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return (wpiJoystick.getRawAxis(axisPort) >0.1d) ? true : false;
     }
 
 
