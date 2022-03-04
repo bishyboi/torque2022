@@ -16,8 +16,8 @@ import frc.robot.game2022.modules.Combine;
 public class SecondaryTask {
 
     private final Xbox driver;
-    private final Arm arm;
-    private final Combine combine;
+    private Arm arm = new Arm();
+    private Combine combine = new Combine();
 
     /*
     Controls the percent of maximum power that a motor can output using talon.set(ControlMode.PercentOutput, power)
@@ -56,7 +56,7 @@ public class SecondaryTask {
         }
         else
         {
-            this.armLowerPower = 0;
+            this.armLowerPower = 0.0;
         }
         
         //Upper Arm movement detecting RB and LB
@@ -69,7 +69,7 @@ public class SecondaryTask {
         }
         else
         {
-            this.armUpperPower = 0;
+            this.armUpperPower = 0.0;
         }
 
         //moving intake motor forward & backward when A & B are pressed respectively
@@ -83,7 +83,7 @@ public class SecondaryTask {
         }
         else
         {
-            this.intakePower = 0;
+            this.intakePower = 0.0;
         }
 
         //moving lift motor up & down when X & Y are pressed respectively
@@ -97,7 +97,7 @@ public class SecondaryTask {
         }
         else
         {
-            this.liftPower = 0;
+            this.liftPower = 0.0;
         }
 
 
@@ -111,7 +111,7 @@ public class SecondaryTask {
         
         this.arm.lowerMove(armLowerPower);
         this.arm.upperMove(armUpperPower);
-
+        
         this.combine.intakeMove(intakePower);
         this.combine.liftMove(liftPower);
         

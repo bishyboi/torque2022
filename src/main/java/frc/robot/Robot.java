@@ -60,8 +60,8 @@ public class Robot extends TimedRobot {
   DriveTrain driveTrain;
   Camera camera;
   Ultrasonic ultrasonic;
-  Arm arm;
-  Combine combine;
+  Arm arm = new Arm();
+  Combine combine = new Combine();
 
   /**
    * This function is run when the robot is first started up and should be
