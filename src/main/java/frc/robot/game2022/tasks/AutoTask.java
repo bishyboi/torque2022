@@ -11,12 +11,13 @@ public class AutoTask {
 
     private final double errorMargin = 3;
     private final double alignmentError = 1;
-    private final double shootingDistance = 36; // TODO: find distance from reflective tape to camera after limelight is mounted
+    private final double reflectiveDistance = 36; // TODO: find distance from reflective tape to camera after limelight is mounted
     private final double exitDistance = 130;
     private final double intakePower = 0;
 
     private int phase = 1;
     private int count = 0; // timer by counting
+
 
     public AutoTask(DriveTrain driveTrain, Camera camera, Combine combine)
     {
@@ -42,10 +43,10 @@ public class AutoTask {
 
             case 1: // phase 1: move to shooting location
                 combine.intakeMove(intakePower);
-                this.centerAlign(shootingDistance, errorMargin);
+                this.centerAlign(reflectiveDistance, errorMargin);
 
-                if( (camera.getSteering_Adjust(alignmentError)==0) &&  (camera.getDistance_Adjust(shootingDistance, errorMargin)==0)){
-                    phase++;
+                if( (camera.getSteering_Adjust(alignmentError)==0) &&  (camera.getDistance_Adjust(reflectiveDistance, errorMargin)==0)){
+                    //phase++;
                 }
 
             break;

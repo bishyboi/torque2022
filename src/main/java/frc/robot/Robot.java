@@ -16,6 +16,7 @@ import frc.robot.lib.components.Camera;
 import frc.robot.lib.components.DriveTrain;
 import frc.robot.game2022.modules.Arm;
 import frc.robot.game2022.modules.Combine;
+import frc.robot.game2022.tasks.AutoTask;
 import frc.robot.game2022.tasks.DriverTask;
 import frc.robot.game2022.tasks.SecondaryTask;
 
@@ -30,7 +31,7 @@ import frc.robot.game2022.tasks.SecondaryTask;
 public class Robot extends TimedRobot {
   DriverTask driver;
   SecondaryTask secondary;
-  //OldAutoTask auto;
+  AutoTask auto;
   DriveTrain driveTrain;
   Camera camera;
   Arm arm = new Arm();
@@ -42,13 +43,13 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    
     //TODO: adjust mountAngle and heightDiff when limelight is mounted on the robot
     camera = new Camera(0,5.5);
     driveTrain = new DriveTrain();
     //auto = new AutoTask(driveTrain, camera);
     driver = new DriverTask(0, driveTrain, camera);
     secondary = new SecondaryTask(1, arm, combine);
+    auto = new AutoTask(driveTrain, camera, combine);
     
   }
   /**
@@ -84,7 +85,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    //auto.loop(); //TODO: Add in the loop method in AutoTask.java
+    auto.loop(); //TODO: Add in the loop method in AutoTask.java
     SmartDashboard.putNumber("X offset", camera.getxOffset());
   }
   @Override
