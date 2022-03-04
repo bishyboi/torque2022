@@ -18,6 +18,7 @@ public class AutoTask {
     private int phase = 1;
     private int count = 0; // timer by counting
 
+
     public AutoTask(DriveTrain driveTrain, Camera camera, Combine combine)
     {
         this.driveTrain = driveTrain;
@@ -45,7 +46,7 @@ public class AutoTask {
                 this.centerAlign(shootingDistance, errorMargin);
 
                 if( (camera.getSteering_Adjust(alignmentError)==0) &&  (camera.getDistance_Adjust(shootingDistance, errorMargin)==0)){
-                    phase++;
+                    //phase++;
                 }
 
             break;
