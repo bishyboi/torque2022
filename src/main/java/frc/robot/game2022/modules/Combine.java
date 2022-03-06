@@ -55,10 +55,10 @@ public class Combine
      */
     public void liftMove(boolean up){
         if (up){
-            liftMotor.set(TalonSRXControlMode.Position, maxDistinRev * ticksperRev);
+            liftMotor.set(ControlMode.Position, maxDistinRev * ticksperRev);
         }
         else{
-            liftMotor.set(TalonSRXControlMode.Position, 0);
+            liftMotor.set(ControlMode.Position, -maxDistinRev * ticksperRev);
         }
     }
 }
