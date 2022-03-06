@@ -97,7 +97,7 @@ public class SecondaryTask {
         }
 
 
-        SmartDashboard.putNumber("Lift Power", liftUp);
+        SmartDashboard.putBoolean("Lift Power", liftUp);
         SmartDashboard.putNumber("Intake Power", intakePower);
         SmartDashboard.putNumber("Upper arm power", armUpperPower);
         SmartDashboard.putNumber("Lower arm power", armLowerPower);
