@@ -42,34 +42,28 @@ public class AutoTask {
 
         switch(phase){
 
-            case 1: // phase 1: move to shooting location
+            case 1: // phase 1: steer
                 combine.intakeMove(intakePower);
-                this.centerAlign(reflectiveDistance, errorMargin);
+                this.align(alignmentError);
 
-                if( (camera.getSteering_Adjust(alignmentError)==0) &&  (camera.getDistance_Adjust(reflectiveDistance, errorMargin)==0)){
+                if( (camera.getSteering_Adjust(alignmentError)==0)){
                     phase++;
                 }
 
             break;
 
-            case 2: 
-                        
-            if( (camera.getSteering_Adjust(alignmentError)==0) &&  (camera.getDistance_Adjust(reflectiveDistance, errorMargin)==0)){
-                phase--;
-            }
-            /**else if (distanceReached??)
-            {
-                phase++;
-            }
-            else
-            {
+            case 2: // phase 2: move in
                 driveTrain.drivePercentageOutput(1, 1);
-            }
-            
-            */
+                this.goTo(reflectiveDistance, errorMargin);
+
+                if(camera.getSteering_Adjust(alignmentError)!=0){
+                    phase--;
+                }else if(camera.getDistance_Adjust(reflectiveDistance, errorMargin)==0){
+                    phase++;
+                }
             break;
 
-            case 3: // phase 2: shoot
+            case 3: // phase 3: shoot
                 count++;
                 combine.intakeMove(-intakePower);
 
@@ -79,10 +73,9 @@ public class AutoTask {
 
             break;
 
-            case 4: // phase 3: move out
+            case 4: // phase 4: move out
                 combine.intakeMove(intakePower);
-                this.centerAlign(exitDistance, errorMargin);
-
+                this.goTo(exitDistance, errorMargin);
             break;
         }
     }
@@ -91,22 +84,27 @@ public class AutoTask {
      * align the robot to a reflective tape at a distance
      * @param distance distance we need to be from the reflective tape
      */
-    public void centerAlign(double distance, double error)
+    public void align(double error)
     {
         double leftPower = 0;
         double rightPower = 0;
 
         leftPower -= camera.getSteering_Adjust(alignmentError);
-        leftPower -= camera.getDistance_Adjust(distance, error);
-
-        // rightPower += camera.getSteering_Adjust(alignmentError);
-        // rightPower -= camera.getDistance_Adjust(distance, error);
-
         rightPower = -leftPower;
 
         SmartDashboard.putNumber("LeftPower_Autonomous", leftPower);
         SmartDashboard.putNumber("RightPower_Autonomous", rightPower);
 
-        driveTrain.drivePercentageOutput(leftPower, rightPower);
+        driveTrain.driveVoltageOutput(leftPower, rightPower);
+    }
+    public void goTo(double distance, double error){
+        double drivePower = 0;
+
+        drivePower = -camera.getDistance_Adjust(distance, error);
+
+        SmartDashboard.putNumber("LeftPower_Autonomous", drivePower);
+        SmartDashboard.putNumber("RightPower_Autonomous", drivePower);
+
+        driveTrain.driveVoltageOutput(drivePower, drivePower);
     }
 }
