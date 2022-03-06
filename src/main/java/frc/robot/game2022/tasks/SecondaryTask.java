@@ -22,7 +22,7 @@ public class SecondaryTask {
     adjust between 0.1-1.0 to speed up and slow down the power of the secondary motors
     */
     private final double powerPercent = 1;
-    private final double encoderTicks= 0.5;
+    private final double encoderTicks= 4096;
     
     private double armLowerPower;
     private double armUpperPower;
@@ -85,11 +85,11 @@ public class SecondaryTask {
         //moving lift motor up & down when X & Y are pressed respectively
         if(driver.getButton(ConfigurationService.BTN_X))
         {
-            this.liftPower = combine.getLiftPosition()-encoderTicks;
+            this.liftPower = -encoderTicks;
         }
         else if(driver.getButton(ConfigurationService.BTN_Y))
         {
-            this.liftPower = combine.getLiftPosition()+ encoderTicks;
+            this.liftPower = encoderTicks;
         }
         else
         { 
@@ -101,7 +101,8 @@ public class SecondaryTask {
         SmartDashboard.putNumber("Intake Power", intakePower);
         SmartDashboard.putNumber("Upper arm power", armUpperPower);
         SmartDashboard.putNumber("Lower arm power", armLowerPower);
-        SmartDashboard.putNumber("Percent Dist of Lift", 100 *  combine.getLiftPosition());
+
+        SmartDashboard.putNumber("Sensor Position", combine.getLiftPosition());
 
 
         this.arm.lowerMove(armLowerPower);
