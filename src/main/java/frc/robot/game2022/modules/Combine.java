@@ -13,7 +13,8 @@ import frc.robot.lib.components.Xbox;
 import frc.robot.lib.components.Camera;
 import java.time.Clock;
 
-public class Combine {
+public class Combine 
+{
     //Motors that refer to the lower and upper parts of the hanging arm motor
     public final WPI_TalonSRX intakeMotor;
     public final WPI_TalonSRX liftMotor;
@@ -21,7 +22,8 @@ public class Combine {
     private final double maxDistinRev= 10; //The maximum revolutions required to reach the height of the combine
     private double ticksperRev = 4096; //Amount of encoder ticks per revolution
 
-    public Combine(){
+    public Combine()
+    {
         intakeMotor = new WPI_TalonSRX(ConfigurationService.COMBINE_INTAKE);
         liftMotor = new WPI_TalonSRX(ConfigurationService.COMBINE_LIFT);
 
@@ -32,7 +34,8 @@ public class Combine {
 
         }
 
-    public void intakeMove(double power){
+    public void intakeMove(double power)
+    {
         intakeMotor.set(ControlMode.PercentOutput, power);
         //intakeMotor.setVoltage(power);
     }
@@ -41,7 +44,8 @@ public class Combine {
      * Returns a raw sensor data for the Encoder
      * @return liftMotor.getSelectedSensorPosition()
      */
-    public double getLiftPosition(){
+    public double getLiftPosition()
+    {
         return liftMotor.getSelectedSensorPosition();
     }
 
