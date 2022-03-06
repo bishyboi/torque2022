@@ -22,12 +22,12 @@ public class SecondaryTask {
     adjust between 0.1-1.0 to speed up and slow down the power of the secondary motors
     */
     private final double powerPercent = 1;
-    private final double encoderTicks= 4096;
+    private final double encoderTicks = 4096;
     
     private double armLowerPower;
     private double armUpperPower;
     private double intakePower;
-    private boolean liftUp; //True if lift needs to be Up, false if down
+    private double liftAmt; //True if lift needs to be Up, false if down
 
     public SecondaryTask(int port, Arm arm, Combine combine)
     {
@@ -85,19 +85,19 @@ public class SecondaryTask {
         //moving lift motor up & down when X & Y are pressed respectively
         if(driver.getButton(ConfigurationService.BTN_X))
         {
-            this.liftUp = false;
+            this.liftAmt = 0.05;
         }
         else if(driver.getButton(ConfigurationService.BTN_Y))
         {
-            this.liftUp = true;
+            this.liftAmt = -0.05;
         }
         else
         { 
-            this.liftUp = false;
+            this.liftAmt = 0;
         }
 
 
-        SmartDashboard.putBoolean("Lift Power", liftUp);
+        SmartDashboard.putNumber("Lift Amount", liftAmt);
         SmartDashboard.putNumber("Intake Power", intakePower);
         SmartDashboard.putNumber("Upper arm power", armUpperPower);
         SmartDashboard.putNumber("Lower arm power", armLowerPower);
@@ -111,7 +111,7 @@ public class SecondaryTask {
         this.combine.intakeMove(intakePower);
 
 
-        this.combine.liftMove(liftUp);
+        this.combine.liftMove(liftAmt);
 
     }
     // /**

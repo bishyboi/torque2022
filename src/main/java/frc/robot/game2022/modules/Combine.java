@@ -53,12 +53,7 @@ public class Combine
      * Method to move the lift motor of the Combine system
      * @param encoderTicks Will move the motor based on its encoder value
      */
-    public void liftMove(boolean up){
-        if (up){
-            liftMotor.set(ControlMode.Position, maxDistinRev * ticksperRev);
-        }
-        else{
-            liftMotor.set(ControlMode.Position, -maxDistinRev * ticksperRev);
-        }
+    public void liftMove(double rotations){
+        liftMotor.set(ControlMode.Position, this.getLiftPosition() + rotations * ticksperRev);
     }
 }
