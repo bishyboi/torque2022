@@ -85,15 +85,15 @@ public class SecondaryTask {
         //moving lift motor up & down when X & Y are pressed respectively
         if(driver.getButton(ConfigurationService.BTN_X))
         {
-            this.liftPower = -encoderTicks;
+            this.liftPower = combine.getLiftPosition()-encoderTicks;
         }
         else if(driver.getButton(ConfigurationService.BTN_Y))
         {
-            this.liftPower = encoderTicks;
+            this.liftPower = combine.getLiftPosition()+ encoderTicks;
         }
         else
         { 
-            this.liftPower = 0.0;
+            this.liftPower = combine.getLiftPosition();
         }
 
 
@@ -108,6 +108,8 @@ public class SecondaryTask {
         this.arm.upperMove(armUpperPower);
              
         this.combine.intakeMove(intakePower);
+
+
         this.combine.liftMove(liftPower);
 
     }

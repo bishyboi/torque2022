@@ -55,7 +55,7 @@ public class Combine {
      * @return currentDist/maxLowerDist
      */
     public double getLiftPosition(){
-        return currentDist/maxLowerDist;
+        return liftMotor.getSelectedSensorPosition();
     }
 
     /**
