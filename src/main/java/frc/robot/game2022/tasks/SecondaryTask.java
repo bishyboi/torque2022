@@ -21,7 +21,8 @@ public class SecondaryTask {
     This is a static amount that controls how fast each of the secondary motors will move, 
     adjust between 0.1-1.0 to speed up and slow down the power of the secondary motors
     */
-    private final double powerPercent = 0.9;
+    private final double powerPercent = 1;
+    private final double encoderTicks= 0.5;
     
     private double armLowerPower;
     private double armUpperPower;
@@ -43,11 +44,11 @@ public class SecondaryTask {
     {
         //Lower Arm movement detecting Button LT and RT
         if(driver.getAxisActive(ConfigurationService.LEFT_TRIGGER)){
-            this.armLowerPower = boundCap(powerPercent);
+            this.armLowerPower = powerPercent;
         }
         else if(driver.getAxisActive(ConfigurationService.RIGHT_TRIGGER))
         {
-            this.armLowerPower = boundCap(-powerPercent);
+            this.armLowerPower = -powerPercent;
         }
         else
         {      
@@ -56,11 +57,11 @@ public class SecondaryTask {
 
         //Upper Arm movement detecting RB and LB
         if(driver.getButton(ConfigurationService.BTN_RB)){
-            this.armUpperPower = boundCap(powerPercent);
+            this.armUpperPower = powerPercent;
         }
         else if(driver.getButton(ConfigurationService.BTN_LB))
         {
-            this.armUpperPower = boundCap(-powerPercent);
+            this.armUpperPower = -powerPercent;
         }
         else
         {
@@ -70,11 +71,11 @@ public class SecondaryTask {
         //moving intake motor forward & backward when A & B are pressed respectively
         if(driver.getButton(ConfigurationService.BTN_A))
         {
-            this.intakePower =  boundCap(powerPercent);
+            this.intakePower =  powerPercent;
         }
         else if(driver.getButton(ConfigurationService.BTN_B))
         {
-            this.intakePower = boundCap(-powerPercent);
+            this.intakePower = -powerPercent;
         }
         else
         {
@@ -84,11 +85,11 @@ public class SecondaryTask {
         //moving lift motor up & down when X & Y are pressed respectively
         if(driver.getButton(ConfigurationService.BTN_X))
         {
-            this.liftPower = boundCap(powerPercent);
+            this.liftPower = -encoderTicks;
         }
         else if(driver.getButton(ConfigurationService.BTN_Y))
         {
-            this.liftPower = boundCap(-powerPercent);
+            this.liftPower = encoderTicks;
         }
         else
         { 
@@ -110,24 +111,24 @@ public class SecondaryTask {
         this.combine.liftMove(liftPower);
 
     }
-    /**
-     * 
-     * @param powerOutput
-     * @return 1 if powerOutput>1, -1 if powerOutput<-1,
-     *         powerOutput otherwise
-     */
-    private double boundCap(double powerOutput)
-    {
-        // if (Math.abs(powerOutput) > 1)
-        // {
-        //     return (powerOutput/Math.abs(powerOutput));
-        // }
-        // else
-        // {
-        //     return powerOutput;
-        return powerOutput; //TODO: Replace this code with what is commented out
+    // /**
+    //  * 
+    //  * @param powerOutput
+    //  * @return 1 if powerOutput>1, -1 if powerOutput<-1,
+    //  *         powerOutput otherwise
+    //  */
+    // private double boundCap(double powerOutput)
+    // {
+    //     // if (Math.abs(powerOutput) > 1)
+    //     // {
+    //     //     return (powerOutput/Math.abs(powerOutput));
+    //     // }
+    //     // else
+    //     // {
+    //     //     return powerOutput;
+    //     return powerOutput; //TODO: Replace this code with what is commented out
         
-    }
+    // }
     public Xbox getDriver()
     {
         return driver;
