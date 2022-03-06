@@ -11,6 +11,7 @@ import edu.wpi.first.networktables.*;
 import frc.robot.lib.components.Xbox;
 import frc.robot.lib.components.Camera;
 import java.time.Clock;
+import frc.robot.lib.components.MotorEncoder;
 // import frc.robot.game2022.modules.Arm;
 // import frc.robot.game2022.modules.Combine;
 
@@ -22,6 +23,7 @@ public class DriverTask
     //Defaults for any game (driving)
     private final Xbox driver;
     
+    private final MotorEncoder encoder;
 
     private final DriveTrain driveTrain;
     // private final Arm arm;
@@ -49,6 +51,7 @@ public class DriverTask
         this.driver = new Xbox(port);
         this.driveTrain = driveTrain;
         this.camera = camera;
+        this.encoder = new MotorEncoder(ConfigurationService.ARM_LOWER);
         // this.arm = arm;
         // this.combine = combine;     
     }
@@ -115,7 +118,7 @@ public class DriverTask
         SmartDashboard.putNumber("Right Power", rightPower);
         SmartDashboard.putNumber("Left-Y", left_y);
         SmartDashboard.putNumber("Right-Y", right_y);
-        
+        SmartDashboard.putNumber("Encoder Reading", encoder.getDist());
         // if(!driver.getButton(ConfigurationService.BTN_A))
         // {
              driveTrain.drivePercentageOutput(leftPower, rightPower);
