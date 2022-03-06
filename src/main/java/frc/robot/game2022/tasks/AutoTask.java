@@ -81,18 +81,11 @@ public class AutoTask {
 
         leftPower -= camera.getSteering_Adjust(alignmentError);
         leftPower -= camera.getDistance_Adjust(distance, error);
-        rightPower += camera.getSteering_Adjust(alignmentError);
-        rightPower -= camera.getDistance_Adjust(distance, error);
 
-        if (leftPower<=0)
-        {
-            leftPower=0;
-        }
-        
-        if (rightPower<=0)
-        {
-            rightPower=0;
-        }
+        // rightPower += camera.getSteering_Adjust(alignmentError);
+        // rightPower -= camera.getDistance_Adjust(distance, error);
+
+        rightPower = -leftPower;
 
         SmartDashboard.putNumber("LeftPower_Autonomous", leftPower);
         SmartDashboard.putNumber("RightPower_Autonomous", rightPower);
