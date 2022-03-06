@@ -11,7 +11,6 @@ import edu.wpi.first.networktables.*;
 import frc.robot.lib.components.Xbox;
 import frc.robot.lib.components.Camera;
 import java.time.Clock;
-import frc.robot.lib.components.MotorEncoder;
 // import frc.robot.game2022.modules.Arm;
 // import frc.robot.game2022.modules.Combine;
 
@@ -22,8 +21,6 @@ public class DriverTask //TODO: clean up driver task with unused code
 {
     //Defaults for any game (driving)
     private final Xbox driver;
-    
-    private final MotorEncoder encoder;
 
     private final DriveTrain driveTrain;
     // private final Arm arm;
@@ -43,17 +40,12 @@ public class DriverTask //TODO: clean up driver task with unused code
      * @param driver The driver gamepad
      * @param eyes the camera
      * @param drivetrain The drivetrain responsible for robot control
-     * @param arm the arm
-     * @param combine the combine :)
      */
     public DriverTask(int port, DriveTrain driveTrain, Camera camera)
     {
         this.driver = new Xbox(port);
         this.driveTrain = driveTrain;
         this.camera = camera;
-        this.encoder = new MotorEncoder(ConfigurationService.ARM_LOWER);
-        // this.arm = arm;
-        // this.combine = combine;     
     }
 
     /**
@@ -89,23 +81,8 @@ public class DriverTask //TODO: clean up driver task with unused code
             rightPower *= 0.25;
         }
 
-        // //Automatically centers the robot if B is held
-        // if(isRunningAutoVision())
-        // {
-        //     camera.setDriverMode(false);
-        //     leftPower -= camera.getSteering_Adjust();
-        //     //leftPower -= camera.getDistance_Adjust();  really only for autonomous
-        //     rightPower += camera.getSteering_Adjust();
-        //     //rightPower -= camera.getDistance_Adjust(); really only for autonomous
-        // }
-        // else
-        // {
-        //     camera.setDriverMode(true);
-        // }
         camera.setDriverMode(true);
         
-        // //If Y is pressed, toggle which side is front (from driver's perspective)
-        // toggleFrontSide();
 
         if(!driveFront)
         {
@@ -118,15 +95,8 @@ public class DriverTask //TODO: clean up driver task with unused code
         SmartDashboard.putNumber("Right Power", rightPower);
         SmartDashboard.putNumber("Left-Y", left_y);
         SmartDashboard.putNumber("Right-Y", right_y);
-        SmartDashboard.putNumber("Encoder Reading", encoder.getDist());
-        // if(!driver.getButton(ConfigurationService.BTN_A))
-        // {
-             driveTrain.drivePercentageOutput(leftPower, rightPower);
-        // }
-        // else
-        // {
-            //driveTrain.tankDriveWithFeedforwardPID(-leftPower, rightPower);
-        //}
+        
+        driveTrain.drivePercentageOutput(leftPower, rightPower);
     }
     /**
      * Checks to see if the driver wants to slow down the drive speed of the car

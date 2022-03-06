@@ -54,11 +54,15 @@ public class AutoTask {
 
             case 2: // phase 2: move in
                 driveTrain.drivePercentageOutput(1, 1);
+                
                 this.goTo(reflectiveDistance, errorMargin);
 
-                if(camera.getSteering_Adjust(alignmentError)!=0){
+                if(camera.getSteering_Adjust(alignmentError)!=0)
+                {
                     phase--;
-                }else if(camera.getDistance_Adjust(reflectiveDistance, errorMargin)==0){
+                }
+                else if(camera.getDistance_Adjust(reflectiveDistance, errorMargin)==0)
+                {
                     phase++;
                 }
             break;
@@ -97,7 +101,9 @@ public class AutoTask {
 
         driveTrain.driveVoltageOutput(leftPower, rightPower);
     }
-    public void goTo(double distance, double error){
+
+    public void goTo(double distance, double error)
+    {
         double drivePower = 0;
 
         drivePower = -camera.getDistance_Adjust(distance, error);
