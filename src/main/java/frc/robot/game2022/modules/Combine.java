@@ -63,7 +63,8 @@ public class Combine {
      * @param encoderTicks Will move the motor based on encoder ticks
      */
     public void liftMove(double encoderTicks){
-        if (this.canMove(encoderTicks)){
+        if (this.canMove(encoderTicks))
+        {
             this.liftMotor.set(ControlMode.Position,encoderTicks);
 
             currentDist += encoderTicks;
