@@ -2,6 +2,7 @@ package frc.robot.game2022.tasks;
 
 import frc.robot.lib.components.DriveTrain;
 import frc.robot.lib.components.Camera;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.game2022.modules.Combine;
 
 public class AutoTask {
@@ -11,7 +12,7 @@ public class AutoTask {
 
     private final double errorMargin = 3;
     private final double alignmentError = 1;
-    private final double reflectiveDistance = 36; // TODO: find distance from reflective tape to camera after limelight is mounted
+    private final double reflectiveDistance = 0; // TODO: find distance from reflective tape to camera after limelight is mounted
     private final double exitDistance = 130;
     private final double intakePower = 0;
 
@@ -82,6 +83,19 @@ public class AutoTask {
         leftPower -= camera.getDistance_Adjust(distance, error);
         rightPower += camera.getSteering_Adjust(alignmentError);
         rightPower -= camera.getDistance_Adjust(distance, error);
+
+        if (leftPower<=0)
+        {
+            leftPower=0;
+        }
+        
+        if (rightPower<=0)
+        {
+            rightPower=0;
+        }
+
+        SmartDashboard.putNumber("LeftPower_Autonomous", leftPower);
+        SmartDashboard.putNumber("RightPower_Autonomous", rightPower);
 
         driveTrain.drivePercentageOutput(leftPower, rightPower);
     }

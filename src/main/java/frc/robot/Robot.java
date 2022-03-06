@@ -55,7 +55,7 @@ public class Robot extends TimedRobot {
 
 
     //TODO: adjust mountAngle and heightDiff when limelight is mounted on the robot
-    camera = new Camera(0,5.5);
+    camera = new Camera(0,0);
     driveTrain = new DriveTrain();
     driver = new DriverTask(0, driveTrain, camera);
     secondary = new SecondaryTask(1, arm, combine);
