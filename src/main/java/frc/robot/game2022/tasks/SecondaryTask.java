@@ -100,7 +100,8 @@ public class SecondaryTask {
         SmartDashboard.putNumber("Intake Power", intakePower);
         SmartDashboard.putNumber("Upper arm power", armUpperPower);
         SmartDashboard.putNumber("Lower arm power", armLowerPower);
-        //TODO: these motor voltage lines crash the code for some unknown reason [Bishoy thinks its because the maxVoltage is greater than 1.0, crashing the code because PercentOutput only works from -1.0-1.0, with 0.0 as neutral]
+        SmartDashboard.putNumber("Percent Dist of Lift", 100 *  combine.getLiftPosition());
+
 
         this.arm.lowerMove(armLowerPower);
         this.arm.upperMove(armUpperPower);
