@@ -12,7 +12,7 @@ public class AutoTask {
 
     private final double errorMargin = 3;
     private final double alignmentError = 1;
-    private final double reflectiveDistance = 0; // TODO: find distance from reflective tape to camera after limelight is mounted
+    private final double reflectiveDistance = 36; // TODO: find distance from reflective tape to camera after limelight is mounted
     private final double exitDistance = 130;
     private final double intakePower = 0;
 
