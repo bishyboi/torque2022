@@ -29,7 +29,7 @@ public class DriverTask
     private Camera camera;
 
     // TODO: ABSOLUTELY NEEDS TUNING
-    private final double maxVoltage = 1.0; 
+    public final double maxVoltage = 1.0; 
     
     Clock clock;
     private final long lockoutPeriod = 500;//in milliseconds 0.001s
