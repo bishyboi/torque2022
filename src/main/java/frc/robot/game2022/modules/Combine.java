@@ -40,8 +40,10 @@ public class Combine {
     /**
      * Determines if there is available space for the liftMotor to move without breaking the robot based on the pre-determined maxLowerDist
      */
-    private boolean canMove(){
-        if (currentDist<=maxLowerDist){
+    private boolean canMove(double encoderTicks){
+        double futureDist= this.currentDist + encoderTicks;
+
+        if ((futureDist<=maxLowerDist) && (futureDist>= 0)){
             return true;
         }else{
             return false;
@@ -61,7 +63,7 @@ public class Combine {
      * @param encoderTicks Will move the motor based on encoder ticks
      */
     public void liftMove(double encoderTicks){
-        if (this.canMove()){
+        if (this.canMove(encoderTicks)){
             this.liftMotor.set(ControlMode.Position,encoderTicks);
 
             currentDist += encoderTicks;
