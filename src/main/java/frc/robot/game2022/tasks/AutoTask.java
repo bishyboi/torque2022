@@ -47,12 +47,29 @@ public class AutoTask {
                 this.centerAlign(reflectiveDistance, errorMargin);
 
                 if( (camera.getSteering_Adjust(alignmentError)==0) &&  (camera.getDistance_Adjust(reflectiveDistance, errorMargin)==0)){
-                    //phase++;
+                    phase++;
                 }
 
             break;
 
-            case 2: // phase 2: shoot
+            case 2: 
+                        
+            if( (camera.getSteering_Adjust(alignmentError)==0) &&  (camera.getDistance_Adjust(reflectiveDistance, errorMargin)==0)){
+                phase--;
+            }
+            /**else if (distanceReached??)
+            {
+                phase++;
+            }
+            else
+            {
+                driveTrain.drivePercentageOutput(1, 1);
+            }
+            
+            */
+            break;
+
+            case 3: // phase 2: shoot
                 count++;
                 combine.intakeMove(-intakePower);
 
@@ -62,7 +79,7 @@ public class AutoTask {
 
             break;
 
-            case 3: // phase 3: move out
+            case 4: // phase 3: move out
                 combine.intakeMove(intakePower);
                 this.centerAlign(exitDistance, errorMargin);
 

@@ -18,7 +18,7 @@ import frc.robot.lib.components.MotorEncoder;
 /**
  * Created by Nick Sloss on 2/7/2017.
  */
-public class DriverTask
+public class DriverTask //TODO: clean up driver task with unused code
 {
     //Defaults for any game (driving)
     private final Xbox driver;
