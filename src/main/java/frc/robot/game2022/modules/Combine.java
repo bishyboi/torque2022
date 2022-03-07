@@ -1,6 +1,7 @@
 package frc.robot.game2022.modules;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -54,6 +55,7 @@ public class Combine
      * @param encoderTicks Will move the motor based on its encoder value
      */
     public void liftMove(double rotations){
-        liftMotor.set(ControlMode.Position, this.getLiftPosition() + rotations * ticksperRev);
+        //liftMotor.set(ControlMode.Position, this.getLiftPosition() + rotations * ticksperRev);
+        liftMotor.set(ControlMode.Position, maxDistinRev*ticksperRev*rotations, DemandType.AuxPID, getLiftPosition());
     }
 }
