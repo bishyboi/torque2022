@@ -20,8 +20,9 @@ public class Combine
     public final WPI_TalonSRX intakeMotor;
     public final WPI_TalonSRX liftMotor;
 
-    private final double maxDistinRev= 10; //The maximum revolutions required to reach the height of the combine
-    private double ticksperRev = 4096; //Amount of encoder ticks per revolution
+    private final int maxDistinRev= 10; //The maximum revolutions required to reach the height of the combine
+    private int ticksperRev = 4096; //Amount of encoder ticks per revolution
+    private int totalTicks = maxDistinRev * ticksperRev;
 
     public Combine()
     {
@@ -32,7 +33,7 @@ public class Combine
         intakeMotor.setNeutralMode(NeutralMode.Brake);
         liftMotor.setNeutralMode(NeutralMode.Brake);
 
-
+        liftMotor.setSelectedSensorPosition(2048);
         }
 
     public void intakeMove(double power)
@@ -50,12 +51,30 @@ public class Combine
         return liftMotor.getSelectedSensorPosition();
     }
 
+    public boolean canMove(double direction)
+    {
+        if ((direction >0) && (this.getLiftPosition()>= totalTicks))
+        {
+            return false;
+        }
+        else if ((direction<0) && (this.getLiftPosition() <0))
+        {
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
     /**
      * Method to move the lift motor of the Combine system
-     * @param encoderTicks Will move the motor based on its encoder value
+     * @param encoderTicks Will move the motor based on its encoder value //TODO: fix this documentation
      */
-    public void liftMove(double rotations){
+    public void liftMove(double direction){
         //liftMotor.set(ControlMode.Position, this.getLiftPosition() + rotations * ticksperRev);
-        liftMotor.set(ControlMode.Position, maxDistinRev*ticksperRev*rotations, DemandType.AuxPID, getLiftPosition());
+        if ( this.canMove(direction))
+        {
+            liftMotor.set(ControlMode.PercentOutput, -direction);
+        }
     }
 }

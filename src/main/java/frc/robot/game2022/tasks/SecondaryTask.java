@@ -27,7 +27,8 @@ public class SecondaryTask {
     private double armLowerPower;
     private double armUpperPower;
     private double intakePower;
-    private double liftAmt; //True if lift needs to be Up, false if down
+    private double liftDirection;
+    private double liftSpeed = 1;
 
     public SecondaryTask(int port, Arm arm, Combine combine)
     {
@@ -83,26 +84,27 @@ public class SecondaryTask {
         }
 
         //moving lift motor up & down when X & Y are pressed respectively
-        if(driver.getButton(ConfigurationService.BTN_X))
+        if(driver.getButton(ConfigurationService.BTN_X) && this.combine.canMove(-liftSpeed))
         {
-            this.liftAmt = 0.05;
+            this.liftDirection = -liftSpeed;
         }
-        else if(driver.getButton(ConfigurationService.BTN_Y))
+        else if(driver.getButton(ConfigurationService.BTN_Y) && this.combine.canMove(liftSpeed))
         {
-            this.liftAmt = -0.05;
+            this.liftDirection = liftSpeed;
         }
         else
         { 
-            this.liftAmt = 0;
+            this.liftDirection = 0;
         }
 
 
-        SmartDashboard.putNumber("Lift Amount", liftAmt);
+        SmartDashboard.putNumber("Lift Torque", liftDirection);
         SmartDashboard.putNumber("Intake Power", intakePower);
         SmartDashboard.putNumber("Upper arm power", armUpperPower);
         SmartDashboard.putNumber("Lower arm power", armLowerPower);
 
         SmartDashboard.putNumber("Sensor Position", combine.getLiftPosition());
+        SmartDashboard.putBoolean("Can Move", combine.canMove(liftDirection));
 
 
         this.arm.lowerMove(armLowerPower);
@@ -110,8 +112,7 @@ public class SecondaryTask {
              
         this.combine.intakeMove(intakePower);
 
-
-        this.combine.liftMove(liftAmt);
+        this.combine.liftMove(liftDirection);
 
     }
     // /**
