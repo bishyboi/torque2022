@@ -21,14 +21,16 @@ public class SecondaryTask {
     This is a static amount that controls how fast each of the secondary motors will move, 
     adjust between 0.1-1.0 to speed up and slow down the power of the secondary motors
     */
-    private final double powerPercent = 1;
+    private final double powerPercent = 1; //Speed of Climbing Arm
     private final double encoderTicks = 4096;
     
+    //Climbing Arm Parameters
     private double armLowerPower;
     private double armUpperPower;
+
+    //Combine Parameters
     private double intakePower;
-    private double liftDirection;
-    private double liftSpeed = 1;
+    private int liftDirection;
 
     public SecondaryTask(int port, Arm arm, Combine combine)
     {
@@ -83,14 +85,15 @@ public class SecondaryTask {
             this.intakePower = 0.0;
         }
 
-        //moving lift motor up & down when X & Y are pressed respectively
-        if(driver.getButton(ConfigurationService.BTN_X) && this.combine.canMove(-liftSpeed))
+        //moving lift motor up & down when X & Y are pressed respectively, 
+        //but won't allow it if it will exceed sensor limit determined in Combine.java (canMove())
+        if(driver.getButton(ConfigurationService.BTN_X) && this.combine.canMove(-1))
         {
-            this.liftDirection = -liftSpeed;
+            this.liftDirection = - 1;
         }
-        else if(driver.getButton(ConfigurationService.BTN_Y) && this.combine.canMove(liftSpeed))
+        else if(driver.getButton(ConfigurationService.BTN_Y) && this.combine.canMove(1))
         {
-            this.liftDirection = liftSpeed;
+            this.liftDirection = 1;
         }
         else
         { 
@@ -115,24 +118,7 @@ public class SecondaryTask {
         this.combine.liftMove(liftDirection);
 
     }
-    // /**
-    //  * 
-    //  * @param powerOutput
-    //  * @return 1 if powerOutput>1, -1 if powerOutput<-1,
-    //  *         powerOutput otherwise
-    //  */
-    // private double boundCap(double powerOutput)
-    // {
-    //     // if (Math.abs(powerOutput) > 1)
-    //     // {
-    //     //     return (powerOutput/Math.abs(powerOutput));
-    //     // }
-    //     // else
-    //     // {
-    //     //     return powerOutput;
-    //     return powerOutput; //TODO: Replace this code with what is commented out
         
-    // }
     public Xbox getDriver()
     {
         return driver;

@@ -20,9 +20,11 @@ public class Combine
     public final WPI_TalonSRX intakeMotor;
     public final WPI_TalonSRX liftMotor;
 
-    private final int maxDistinRev= 10; //The maximum revolutions required to reach the height of the combine
-    private int ticksperRev = 4096; //Amount of encoder ticks per revolution
-    private int totalTicks = maxDistinRev * ticksperRev;
+    public static final int maxDistinRev= 10; //The maximum revolutions required to reach the height of the combine
+    public static final int ticksperRev = 4096; //Amount of encoder ticks per revolution
+    public static final int maxTicks = maxDistinRev * ticksperRev; //Upper limit of the combine lift
+    public static final double LIFT_SPEED = 0.05;
+    public static final double LIFT_SPEED_DIVISOR = Combine.binlog(maxTicks);
 
     public Combine()
     {
@@ -46,14 +48,19 @@ public class Combine
      * Returns a raw sensor data for the Encoder
      * @return liftMotor.getSelectedSensorPosition()
      */
-    public double getLiftPosition()
+    public int getLiftPosition()
     {
-        return liftMotor.getSelectedSensorPosition();
+        return (int)liftMotor.getSelectedSensorPosition();
     }
 
-    public boolean canMove(double direction)
+    /**
+    * Determines if the robot is allowed to move based on the direction its trying to go to
+    * @param direction refers to the PercentOutput in the _talon.set() method
+    * @returns true if the robot is allowed to move in that direction, otherwise, false
+    */
+    public boolean canMove(int direction)
     {
-        if ((direction >0) && (this.getLiftPosition()>= totalTicks))
+        if ((direction >0) && (this.getLiftPosition()>= maxTicks))
         {
             return false;
         }
@@ -67,14 +74,46 @@ public class Combine
     }
 
     /**
-     * Method to move the lift motor of the Combine system
-     * @param encoderTicks Will move the motor based on its encoder value //TODO: fix this documentation
+     * Moves the ball lift taking in the direction
      */
-    public void liftMove(double direction){
-        //liftMotor.set(ControlMode.Position, this.getLiftPosition() + rotations * ticksperRev);
+    public void liftMove(int direction){ 
         if ( this.canMove(direction))
         {
-            liftMotor.set(ControlMode.PercentOutput, -direction);
+            liftMotor.set(ControlMode.PercentOutput, this.determinePower(direction)) ;
         }
     }
+
+    /**
+     * Determines the power output based on a function
+     */
+
+     public double determinePower(int direction)
+     {
+         if (direction ==0){
+            return 0;
+         }
+         else if (direction<0){
+             return Combine.LIFT_SPEED;
+         }
+         else{
+             return -Combine.LIFT_SPEED;
+         }
+
+
+     }
+
+     /**
+      * Log-Base 2 function
+      * @param int number
+      * @return log base 2 (n)
+      */
+     public static int binlog( int number ) // returns 0 for bits=0
+     {
+         int log = 0;
+         if( ( number & 0xffff0000 ) != 0 ) { number >>>= 16; log = 16; }
+         if( number >= 256 ) { number >>>= 8; log += 8; }
+         if( number >= 16  ) { number >>>= 4; log += 4; }
+         if( number >= 4   ) { number >>>= 2; log += 2; }
+         return log + ( number >>> 1 );
+     }
 }
