@@ -89,14 +89,24 @@ public class Combine
 
      public double determinePower(int direction)
      {
+         double outpPower = 0;
          if (direction ==0){
             return 0;
          }
-         else if (direction<0){
-             return Combine.LIFT_SPEED;
+         else if (direction>0){
+            outpPower = binlog(maxTicks-this.getLiftPosition());
+            outpPower /= -LIFT_SPEED_DIVISOR;
+            outpPower = (outpPower > -0.1) ? -0.1 : outpPower;
+            return outpPower/1.5;
+            //return (Combine.LIFT_SPEED) * ( (binlog(this.getLiftPosition())) /LIFT_SPEED_DIVISOR);
          }
          else{
-             return -Combine.LIFT_SPEED;
+            outpPower = binlog(this.getLiftPosition());
+            outpPower /= LIFT_SPEED_DIVISOR;
+            outpPower = (outpPower < 0.1) ? 0.1 : outpPower;
+            return outpPower/1.5;
+            //return -((Combine.LIFT_SPEED) * ( (binlog( maxTicks-this.getLiftPosition() )) /LIFT_SPEED_DIVISOR));
+            
          }
 
 
