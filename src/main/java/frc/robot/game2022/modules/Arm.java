@@ -26,10 +26,12 @@ public class Arm {
         upperMotor.setNeutralMode(NeutralMode.Brake);
     }
 
+    //moves the lower arm using power of the corresponding input
     public void lowerMove(double power){
         lowerMotor.set(ControlMode.PercentOutput, power);
     }
 
+    //moves the upper arm 
     public void upperMove(double power){
         upperMotor.set(ControlMode.PercentOutput, power);
         //upperMotor.setVoltage(power);

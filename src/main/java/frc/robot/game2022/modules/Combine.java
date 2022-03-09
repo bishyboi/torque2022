@@ -38,6 +38,9 @@ public class Combine
         liftMotor.setSelectedSensorPosition(2048);
         }
 
+    /**spins the combine to gather balls
+     * @param power is from the controller input
+     */
     public void intakeMove(double power)
     {
         intakeMotor.set(ControlMode.PercentOutput, power);
