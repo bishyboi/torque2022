@@ -92,13 +92,16 @@ public class Combine
 
      public double determinePower(int direction)
      {
+         //$$ is untested changes
          double dampener= 5; //TODO: Original value was 1.5, tweak at competition
+         //double dampener = 2.5; //$$
          double outpPower = 0;
          if (direction ==0){
             return 0;
          }
          else if (direction>0){
             outpPower = binlog(maxTicks-this.getLiftPosition());
+            //outpPower -= 7; //$$
             outpPower /= -LIFT_SPEED_DIVISOR;
             outpPower = (outpPower > -0.1) ? -0.1 : outpPower;
             return outpPower/dampener;
@@ -106,6 +109,7 @@ public class Combine
          }
          else{
             outpPower = binlog(this.getLiftPosition());
+            //outpPower -= 7; //$$
             outpPower /= LIFT_SPEED_DIVISOR;
             outpPower = (outpPower < 0.1) ? 0.1 : outpPower;
             return outpPower/dampener;

@@ -73,6 +73,7 @@ public class DriverTask //TODO: clean up driver task with unused code
             rightPower /= Math.abs(rightPower);
         }
         
+        
 
         //Sets output to 25% normal power if RB is pressed 
         if(isSlowed())
@@ -80,10 +81,10 @@ public class DriverTask //TODO: clean up driver task with unused code
             leftPower *= 0.25;
             rightPower *= 0.25;
         }
-
+        //obsolete
         camera.setDriverMode(true);
         
-
+        //obsolete
         if(!driveFront)
         {
             leftPower = -leftPower;

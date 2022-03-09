@@ -86,6 +86,7 @@ public class SecondaryTask {
 
         //moving lift motor up & down when X & Y are pressed respectively, 
         //but won't allow it if it will exceed sensor limit determined in Combine.java (canMove())
+        //note: the canMove check is obsolete but makes it easier to read
         if(driver.getButton(ConfigurationService.BTN_X) && this.combine.canMove(-1))
         {
             this.liftDirection = - 1;
