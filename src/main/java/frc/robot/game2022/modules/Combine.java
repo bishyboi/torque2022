@@ -110,7 +110,15 @@ public class Combine
         //     return outpPower/dampener;
         //     //return -((Combine.LIFT_SPEED) * ( (binlog( maxTicks-this.getLiftPosition() )) /LIFT_SPEED_DIVISOR));
         //  }
-         return 0.5; 
+        if (direction > 0.1){
+            return 0.25;
+        }
+        else if (direction < 0.1){
+            return -0.25;
+        } 
+        else {
+            return 0;
+        }
 
 
      }
