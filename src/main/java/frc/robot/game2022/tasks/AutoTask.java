@@ -46,9 +46,14 @@ public class AutoTask {
                 //keeps/sucks ball in, aligns robot
                 combine.intakeMove(intakePower);
                 this.align(alignmentError);
+                count ++;
 
-                if( (camera.getSteering_Adjust(alignmentError)==0)){
-                    phase++;
+                if (count < 7.5*50){ // first 7.5 secs:
+                    if( (camera.getSteeringAdjust(alignmentError)==0)){ // good angle: move in
+                        phase++;
+                    }
+                }else{ // last 7.5 secs
+                    phase = 4; // taxi out
                 }
 
             break;
@@ -59,13 +64,20 @@ public class AutoTask {
                 
                 this.goTo(reflectiveDistance, errorMargin);
 
-                if(camera.getSteering_Adjust(alignmentError)!=0)
-                {
-                    phase--;
-                }
-                else if(camera.getDistance_Adjust(reflectiveDistance, errorMargin)==0)
-                {
-                    phase++;
+                count++;
+                if (count < 7.5*50){ // first 7.5 secs:
+
+                    if(camera.getSteeringAdjust(alignmentError)!=0) // bad angle: align
+                    {
+                        phase--;
+                    }
+                    else if(camera.getDistanceAdjust(reflectiveDistance, errorMargin)==0) // good angle and distance: next phase and reset count for phase 3
+                    {
+                        phase++;
+                        count = 0;
+                    }
+                }else{ // last 7.5 secs:
+                    phase = 4; // taxi out
                 }
             break;
 
@@ -97,7 +109,7 @@ public class AutoTask {
         double leftPower = 0;
         double rightPower = 0;
 
-        leftPower -= camera.getSteering_Adjust(alignmentError);
+        leftPower -= camera.getSteeringAdjust(alignmentError);
         rightPower = -leftPower;
 
         SmartDashboard.putNumber("LeftPower_Autonomous", leftPower);
@@ -115,7 +127,7 @@ public class AutoTask {
     {
         double drivePower = 0;
 
-        drivePower = -camera.getDistance_Adjust(distance, error);
+        drivePower = -camera.getDistanceAdjust(distance, error);
 
         SmartDashboard.putNumber("LeftPower_Autonomous", drivePower);
         SmartDashboard.putNumber("RightPower_Autonomous", drivePower);

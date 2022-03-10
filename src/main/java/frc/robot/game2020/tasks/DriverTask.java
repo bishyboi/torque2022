@@ -86,9 +86,9 @@ public class DriverTask
         if(isRunningAutoVision())
         {
             camera.setDriverMode(false);
-            leftPower -= camera.getSteering_Adjust(1);
+            //leftPower -= camera.getSteering_Adjust(1);
             //leftPower -= camera.getDistance_Adjust();  really only for autonomous
-            rightPower += camera.getSteering_Adjust(1);
+            //rightPower += camera.getSteering_Adjust(1);
             //rightPower -= camera.getDistance_Adjust(); really only for autonomous
         }
         else

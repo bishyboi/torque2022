@@ -13,15 +13,17 @@ public class Camera
     public double x,y,area;
     private final double mountAngle; //Angle the camera is mounted at. DOUBLE CHECK THIS IS ACCURATE
     private final double heightDiff; //Height from camera to goal. DOUBLE CHECK THIS IS ACCURATE
+    private final double xPos;
     /**
      * Intializes vision
      * @param mountAngle angle the cmaera is mounted at
      * @param heightDiff height from camera to goal
      */
-    public Camera(double mountAngle, double heightDiff)
+    public Camera(double mountAngle, double heightDiff, double xPos)
     {
         this.mountAngle = mountAngle;
         this.heightDiff = heightDiff;
+        this.xPos = xPos;
         table = NetworkTableInstance.getDefault().getTable("limelight");
 
         tx = table.getEntry("tx");
@@ -74,53 +76,56 @@ public class Camera
      * @param errorMargin error margin
      * @return energy required to reach selected distance
      */
-    public double getDistance_Adjust(double finalDistance, double errorMargin)
+    public double getDistanceAdjust(double finalDistance, double errorMargin)
     {   
-        double distance_adjust;
+        double distanceAdjust;
         double kpDistance = 0.01f; //proportional gain for distance
-        double distance_error = calculateDistance() - finalDistance;
+        double distanceError = calculateDistance() - finalDistance;
         
-        if (Math.abs(distance_error) <= errorMargin)
+        if (Math.abs(distanceError) <= errorMargin)
         {
-            distance_adjust = 0;
+            distanceAdjust = 0;
         }
         else
         {
-            distance_adjust = distance_error * kpDistance;
+            distanceAdjust = distanceError * kpDistance;
         }
 
         SmartDashboard.putNumber("Distance", calculateDistance());
-        SmartDashboard.putNumber("Distance Adjust", distance_adjust);
-        SmartDashboard.putNumber("Distance Error", distance_error);
+        SmartDashboard.putNumber("Distance Adjust", distanceAdjust);
+        SmartDashboard.putNumber("Distance Error", distanceError);
         SmartDashboard.putNumber("Ty", ty.getDouble(0.0));
-        return distance_adjust;
+        return distanceAdjust;
     }
 
     /**
      * @param errorMargin degrees of error tolerated
      * @return energy required to steer to face the visible target
      */
-    public double getSteering_Adjust(double errorMargin)
+    public double getSteeringAdjust(double errorMargin)
     {
-        double steering_adjust = 0.0;
+        double steeringAdjust = 0.0;
         double kpSteering = 0.015f;
-        double min_command = 0.07f; //all speed commands will be no less than this value due to friction, but can make accuracy difficult
+        double minCommand = 0.07f; //all speed commands will be no less than this value due to friction, but can make accuracy difficult
         //-0.02 kP, 0.08f <--- pretty optimal numbers
-        double heading_error = tx.getDouble(0.0);
+        double opp = this.calculateDistance()*Math.tan(tx.getDouble(0.0))+this.xPos;
+        double xError = Math.atan(opp/this.calculateDistance());
+
+        //double heading_error = tx.getDouble(0.0);
         
-        if (heading_error > errorMargin)
+        if (xError > errorMargin)
         {
-            steering_adjust = kpSteering*heading_error + min_command;
+            steeringAdjust = kpSteering*xError + minCommand;
         }
-        else if (heading_error == 0)
+        else if (xError == 0)
         {
-            steering_adjust = 0;
+            steeringAdjust = 0;
         }
-        else if (heading_error < errorMargin)
+        else if (xError < errorMargin)
         {
-            steering_adjust = kpSteering*heading_error - min_command;
+            steeringAdjust = kpSteering*xError - minCommand;
         }
 
-        return steering_adjust;
+        return steeringAdjust;
     }
 }

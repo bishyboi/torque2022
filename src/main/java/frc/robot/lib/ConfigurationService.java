@@ -15,10 +15,10 @@ public class ConfigurationService
     public static final int DRIVETRAIN_RIGHT_SLAVE    = 3; //3
     
     //TALON Port Integers for Modules (2022)
-    public static final int ARM_LOWER                 = 12; //15, originally 4
+    public static final int ARM_LOWER                 = 15; //15, originally 4
     public static final int ARM_UPPER                 = 14; //14, originally 5
     public static final int COMBINE_INTAKE            = 13; //13, originally 6
-    public static final int COMBINE_LIFT              = 15; //12, originally 7
+    public static final int COMBINE_LIFT              = 12; //12, originally 7
 
     //Sensors
     public static final int ULTRASONIC_PORT           = 0; 
