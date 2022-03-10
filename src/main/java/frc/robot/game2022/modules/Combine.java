@@ -1,18 +1,11 @@
 package frc.robot.game2022.modules;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import frc.robot.lib.ConfigurationService;
-import frc.robot.lib.components.DriveTrain;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.networktables.*;
-import frc.robot.lib.components.Xbox;
-import frc.robot.lib.components.Camera;
-import java.time.Clock;
 
 public class Combine 
 {
@@ -35,7 +28,7 @@ public class Combine
         intakeMotor.setNeutralMode(NeutralMode.Brake);
         liftMotor.setNeutralMode(NeutralMode.Brake);
 
-        liftMotor.setSelectedSensorPosition(2048);
+        liftMotor.setSelectedSensorPosition(0);
         }
 
     /**spins the combine to gather balls
@@ -63,7 +56,7 @@ public class Combine
     */
     public boolean canMove(int direction)
     {
-        if ((direction >0) && (this.getLiftPosition()>= maxTicks))
+        /*if ((direction >0) && (this.getLiftPosition()>= maxTicks))
         {
             return false;
         }
@@ -74,6 +67,8 @@ public class Combine
         else{
             return true;
         }
+        */
+        return true;
     }
 
     /**
@@ -92,30 +87,30 @@ public class Combine
 
      public double determinePower(int direction)
      {
-         //$$ is untested changes
-         double dampener= 5; //TODO: Original value was 1.5, tweak at competition
-         //double dampener = 2.5; //$$
-         double outpPower = 0;
-         if (direction ==0){
-            return 0;
-         }
-         else if (direction>0){
-            outpPower = binlog(maxTicks-this.getLiftPosition());
-            //outpPower -= 7; //$$
-            outpPower /= -LIFT_SPEED_DIVISOR;
-            outpPower = (outpPower > -0.1) ? -0.1 : outpPower;
-            return outpPower/dampener;
-            //return (Combine.LIFT_SPEED) * ( (binlog(this.getLiftPosition())) /LIFT_SPEED_DIVISOR);
-         }
-         else{
-            outpPower = binlog(this.getLiftPosition());
-            //outpPower -= 7; //$$
-            outpPower /= LIFT_SPEED_DIVISOR;
-            outpPower = (outpPower < 0.1) ? 0.1 : outpPower;
-            return outpPower/dampener;
-            //return -((Combine.LIFT_SPEED) * ( (binlog( maxTicks-this.getLiftPosition() )) /LIFT_SPEED_DIVISOR));
-            
-         }
+        //  //$$ is untested changes
+        //  double dampener= 2; //TODO: ORIGINALLY 1.5, TWEak at competition
+        //  //double dampener = 2.5; //$$
+        //  double outpPower = 0;
+        //  if (direction ==0){
+        //     return 0;
+        //  }
+        //  else if (direction>0){
+        //     outpPower = binlog(maxTicks-this.getLiftPosition());
+        //     //outpPower -= 7; //$$
+        //     outpPower /= -LIFT_SPEED_DIVISOR;
+        //     outpPower = (outpPower > -0.1) ? -0.1 : outpPower;
+        //     return outpPower/dampener;
+        //     //return (Combine.LIFT_SPEED) * ( (binlog(this.getLiftPosition())) /LIFT_SPEED_DIVISOR);
+        //  }
+        //  else{
+        //     outpPower = binlog(this.getLiftPosition());
+        //     //outpPower -= 7; //$$
+        //     outpPower /= LIFT_SPEED_DIVISOR;
+        //     outpPower = (outpPower < 0.1) ? 0.1 : outpPower;
+        //     return outpPower/dampener;
+        //     //return -((Combine.LIFT_SPEED) * ( (binlog( maxTicks-this.getLiftPosition() )) /LIFT_SPEED_DIVISOR));
+        //  }
+         return 0.5; 
 
 
      }

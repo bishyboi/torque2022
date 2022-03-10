@@ -1,13 +1,11 @@
 package frc.robot.game2022.tasks;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 //import com.revrobotics.Config;
 //import com.revrobotics.*;
 
 import frc.robot.lib.ConfigurationService;
 import frc.robot.lib.components.DriveTrain;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.networktables.*;
 import frc.robot.lib.components.Xbox;
 import frc.robot.lib.components.Camera;
 import java.time.Clock;
@@ -97,7 +95,7 @@ public class DriverTask //TODO: clean up driver task with unused code
         SmartDashboard.putNumber("Left-Y", left_y);
         SmartDashboard.putNumber("Right-Y", right_y);
         
-        driveTrain.drivePercentageOutput(leftPower * powerDampener, rightPower * powerDampener);
+        driveTrain.drivePercentageOutput(-leftPower * powerDampener, rightPower * powerDampener);
     }
     /**
      * Checks to see if the driver wants to slow down the drive speed of the car

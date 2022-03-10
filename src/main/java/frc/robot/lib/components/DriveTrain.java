@@ -8,9 +8,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;//Mainly for debugging
 import frc.robot.lib.ConfigurationService;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.wpilibj.Encoder;
 
 
 

@@ -10,10 +10,10 @@ public class AutoTask {
     private Camera camera;
     private Combine combine;
 
-    private final double errorMargin = 3; //distance
-    private final double alignmentError = 1; //angle in degrees
-    private final double reflectiveDistance = 36; // TODO: find distance from reflective tape to camera after limelight is mounted
-    private final double exitDistance = 130+6; //distance travelled backwards after shooting
+    private final double errorMargin = 5; //inches
+    private final double alignmentError = 5; //angle in degrees
+    private final double horizontalShootingDistance = 9.5+15.5; //HORIZONTAL distance from reflective tape to camera when shooting
+    private final double exitDistance = 15.5+93+9.5+6/*130+6*/; //distance travelled backwards after shooting
     private final double intakePower = 0;
 
     private int phase = 1;
@@ -62,7 +62,7 @@ public class AutoTask {
                 //goes to hub, re-aligns if necessary
                 driveTrain.drivePercentageOutput(0.25, 0.25);
                 
-                this.goTo(reflectiveDistance, errorMargin);
+                this.goTo(horizontalShootingDistance, errorMargin);
 
                 count++;
                 if (count < 7.5*50){ // first 7.5 secs:
@@ -71,7 +71,7 @@ public class AutoTask {
                     {
                         phase--;
                     }
-                    else if(camera.getDistanceAdjust(reflectiveDistance, errorMargin)==0) // good angle and distance: next phase and reset count for phase 3
+                    else if(camera.getDistanceAdjust(horizontalShootingDistance, errorMargin)==0) // good angle and distance: next phase and reset count for phase 3
                     {
                         phase++;
                         count = 0;

@@ -54,8 +54,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Auto Paths", chooser);
 
 
-    //TODO: adjust mountAngle and heightDiff when limelight is mounted on the robot
-    camera = new Camera(69, 95, 12.5);
+    camera = new Camera(69, 95, 12);
     driveTrain = new DriveTrain();
     driver = new DriverTask(0, driveTrain, camera);
     secondary = new SecondaryTask(1, arm, combine);
