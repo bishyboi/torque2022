@@ -28,7 +28,7 @@ public class DriverTask //TODO: clean up driver task with unused code
     private Camera camera;
 
     // TODO: ABSOLUTELY NEEDS TUNING
-    public final double maxVoltage = 1.0; 
+    public final double powerDampener = 0.3; 
     
     Clock clock;
     private final long lockoutPeriod = 500;//in milliseconds 0.001s
@@ -97,7 +97,7 @@ public class DriverTask //TODO: clean up driver task with unused code
         SmartDashboard.putNumber("Left-Y", left_y);
         SmartDashboard.putNumber("Right-Y", right_y);
         
-        driveTrain.drivePercentageOutput(leftPower, rightPower);
+        driveTrain.drivePercentageOutput(leftPower * powerDampener, rightPower * powerDampener);
     }
     /**
      * Checks to see if the driver wants to slow down the drive speed of the car
