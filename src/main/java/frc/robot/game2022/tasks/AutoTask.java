@@ -43,7 +43,6 @@ public class AutoTask {
         switch(phase){
 
             case 1: // phase 1: steer
-                //keeps/sucks ball in, aligns robot
                 combine.intakeMove(intakePower);
                 this.align(alignmentError);
                 count ++;
@@ -59,7 +58,6 @@ public class AutoTask {
             break;
 
             case 2: // phase 2: move in
-                //goes to hub, re-aligns if necessary
                 driveTrain.drivePercentageOutput(0.25, 0.25);
                 
                 this.goTo(horizontalShootingDistance, errorMargin);
@@ -81,8 +79,7 @@ public class AutoTask {
                 }
             break;
 
-            case 3: // phase 3: shoot
-                //pushes ball out for 2 seconds
+            case 3: // phase 3: shoot - push ball out for 2 secs
                 count++;
                 combine.intakeMove(-intakePower);
 
@@ -93,7 +90,6 @@ public class AutoTask {
             break;
 
             case 4: // phase 4: move out
-                //moves backwards
                 combine.intakeMove(intakePower);
                 this.goTo(exitDistance, errorMargin);
             break;
