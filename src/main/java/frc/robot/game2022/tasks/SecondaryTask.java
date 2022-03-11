@@ -53,18 +53,18 @@ public class SecondaryTask {
             this.armLowerPower = 0.0;
         }
 
-        //Upper Arm movement detecting RB and LB
-        if(driver.getButton(ConfigurationService.BTN_RB)){
-            this.armUpperPower = powerPercent;
-        }
-        else if(driver.getButton(ConfigurationService.BTN_LB))
-        {
-            this.armUpperPower = -powerPercent;
-        }
-        else
-        {
-            this.armUpperPower = 0.0;
-        }
+        // //Upper Arm movement detecting RB and LB
+        // if(driver.getButton(ConfigurationService.BTN_RB)){
+        //     this.armUpperPower = powerPercent;
+        // }
+        // else if(driver.getButton(ConfigurationService.BTN_LB))
+        // {
+        //     this.armUpperPower = -powerPercent;
+        // }
+        // else
+        // {
+        //     this.armUpperPower = 0.0;
+        // }
 
         //moving intake motor forward & backward when A & B are pressed respectively
         if(driver.getButton(ConfigurationService.BTN_A))

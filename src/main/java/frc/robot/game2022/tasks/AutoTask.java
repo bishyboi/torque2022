@@ -40,61 +40,62 @@ public class AutoTask {
 
     public void loop() {
 
-        switch(phase){
+        driveTrain.drivePercentageOutput(-1, -1);
+        // switch(phase){
 
-            case 1: // phase 1: steer
-                combine.intakeMove(intakePower);
-                this.align(alignmentError);
-                count ++;
+        //     case 1: // phase 1: steer
+        //         combine.intakeMove(intakePower);
+        //         this.align(alignmentError);
+        //         count ++;
 
-                if (count < 7.5*50){ // first 7.5 secs:
-                    if( (camera.getSteeringAdjust(alignmentError)==0)){ // good angle: move in
-                        phase++;
-                    }
-                }else{ // last 7.5 secs
-                    phase = 4; // taxi out
-                }
+        //         if (count < 7.5*50){ // first 7.5 secs:
+        //             if( (camera.getSteeringAdjust(alignmentError)==0)){ // good angle: move in
+        //                 phase++;
+        //             }
+        //         }else{ // last 7.5 secs
+        //             phase = 4; // taxi out
+        //         }
 
-            break;
+        //     break;
 
-            case 2: // phase 2: move in
-                driveTrain.drivePercentageOutput(0.25, 0.25);
+        //     case 2: // phase 2: move in
+        //         driveTrain.drivePercentageOutput(0.25, 0.25);
                 
-                this.goTo(horizontalShootingDistance, errorMargin);
+        //         this.goTo(horizontalShootingDistance, errorMargin);
 
-                count++;
-                if (count < 7.5*50){ // first 7.5 secs:
+        //         count++;
+        //         if (count < 7.5*50){ // first 7.5 secs:
 
-                    if(camera.getSteeringAdjust(alignmentError)!=0) // bad angle: align
-                    {
-                        phase--;
-                    }
-                    else if(camera.getDistanceAdjust(horizontalShootingDistance, errorMargin)==0) // good angle and distance: next phase and reset count for phase 3
-                    {
-                        phase++;
-                        count = 0;
-                    }
-                }else{ // last 7.5 secs:
-                    phase = 4; // taxi out
-                }
-            break;
+        //             if(camera.getSteeringAdjust(alignmentError)!=0) // bad angle: align
+        //             {
+        //                 phase--;
+        //             }
+        //             else if(camera.getDistanceAdjust(horizontalShootingDistance, errorMargin)==0) // good angle and distance: next phase and reset count for phase 3
+        //             {
+        //                 phase++;
+        //                 count = 0;
+        //             }
+        //         }else{ // last 7.5 secs:
+        //             phase = 4; // taxi out
+        //         }
+        //     break;
 
-            case 3: // phase 3: shoot - push ball out for 2 secs
-                count++;
-                combine.intakeMove(-intakePower);
+        //     case 3: // phase 3: shoot - push ball out for 2 secs
+        //         count++;
+        //         combine.intakeMove(-intakePower);
 
-                if(count >= 100){
-                    phase++;
-                }
+        //         if(count >= 100){
+        //             phase++;
+        //         }
 
-            break;
+        //     break;
 
-            case 4: // phase 4: move out
-                combine.intakeMove(intakePower);
-                //this.goTo(exitDistance, errorMargin);
-                driveTrain.drivePercentageOutput(-0.4, -0.4);
-            break;
-        }
+        //     case 4: // phase 4: move out
+        //         combine.intakeMove(intakePower);
+        //         //this.goTo(exitDistance, errorMargin);
+        //         driveTrain.drivePercentageOutput(-0.4, -0.4);
+        //     break;
+        // }
     }
 
     /**
