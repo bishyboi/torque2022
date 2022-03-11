@@ -102,7 +102,7 @@ public class SecondaryTask {
         SmartDashboard.putNumber("Upper arm power", armUpperPower);
         SmartDashboard.putNumber("Lower arm power", armLowerPower);
 
-        SmartDashboard.putNumber("Sensor Position", combine.getLiftPosition());
+        SmartDashboard.putNumber("Sensor Position", combine.getLiftPosition() / 4096);
         SmartDashboard.putBoolean("Can Move", combine.canMove(liftDirection));
         SmartDashboard.putNumber("Adjusted Direction", combine.determinePower(liftDirection));
 

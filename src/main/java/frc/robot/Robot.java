@@ -90,7 +90,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     autoSelected = chooser.getSelected();
     System.out.println("Path selected: " + autoSelected);
-    camera.setDriverMode(false);
+    camera.setDriverMode(true);
   }
   /**
    * This function is called periodically during autonomous.
@@ -98,6 +98,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     auto.loop(); //TODO: Add in the loop method in AutoTask.java
+
     SmartDashboard.putNumber("X offset", camera.getxOffset());
   }
   @Override

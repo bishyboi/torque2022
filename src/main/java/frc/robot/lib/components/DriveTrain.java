@@ -49,6 +49,11 @@ public class DriveTrain
 
         this.configureTalons();
 
+        LeftMaster.setNeutralMode(NeutralMode.Coast);
+        RightMaster.setNeutralMode(NeutralMode.Coast);
+
+        LeftSlave.setNeutralMode(NeutralMode.Coast);
+        RightSlave.setNeutralMode(NeutralMode.Coast);
         //pigeon = new PigeonIMU(RightSlave);
         //heading = this.getHeading();
     }
@@ -70,8 +75,8 @@ public class DriveTrain
         LeftMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 10);
         RightMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, 0, 10);
 
-        LeftMaster.setNeutralMode(NeutralMode.Brake);
-        RightMaster.setNeutralMode(NeutralMode.Brake);
+        LeftMaster.setNeutralMode(NeutralMode.Coast);
+        RightMaster.setNeutralMode(NeutralMode.Coast);
         LeftSlave.set(ControlMode.Follower, LeftMaster.getDeviceID());
         RightSlave.set(ControlMode.Follower, RightMaster.getDeviceID());
     

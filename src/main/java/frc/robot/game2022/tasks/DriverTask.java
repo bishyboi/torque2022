@@ -26,7 +26,7 @@ public class DriverTask //TODO: clean up driver task with unused code
     private Camera camera;
 
     // TODO: ABSOLUTELY NEEDS TUNING
-    public final double powerDampener = 0.75; //0-1 dampener
+    public final double powerDampener = 1.0; //0-1 dampener
     
     Clock clock;
     private final long lockoutPeriod = 500;//in milliseconds 0.001s
@@ -81,8 +81,8 @@ public class DriverTask //TODO: clean up driver task with unused code
         //Sets output to 25% normal power if RB is pressed 
         if(isSlowed())
         {
-            leftPower *= 0.25;
-            rightPower *= 0.25;
+            leftPower*= (1- driver.getAxis(ConfigurationService.RIGHT_TRIGGER));
+            rightPower*= (1- driver.getAxis(ConfigurationService.RIGHT_TRIGGER));
         }
         //obsolete
         camera.setDriverMode(true);
@@ -101,7 +101,7 @@ public class DriverTask //TODO: clean up driver task with unused code
      */
     private boolean isSlowed()
     {
-        return driver.getButton(ConfigurationService.BTN_RB);
+        return driver.getButton(ConfigurationService.BTN_A);
     }
 
     // /**
