@@ -52,19 +52,17 @@ public class DriverTask //TODO: clean up driver task with unused code
     public void teleop()
     {
         //Reading in axes from Controller and if they're within the deadband range, it sets it to 0
-        // double left_y = deadband(driver.getAxis(ConfigurationService.LEFT_Y_AXIS));
-        // double right_y = deadband(driver.getAxis(ConfigurationService.RIGHT_Y_AXIS));
+        double left_y = deadband(driver.getAxis(ConfigurationService.LEFT_Y_AXIS));
+        double right_y = deadband(driver.getAxis(ConfigurationService.RIGHT_Y_AXIS));
 
-        double power = deadband(driver.getAxis(ConfigurationService.LEFT_Y_AXIS));
-        double turnFactor = deadband(driver.getAxis(ConfigurationService.RIGHT_X_AXIS));
+        // double power = deadband(driver.getAxis(ConfigurationService.LEFT_Y_AXIS));
+        // double turnFactor = deadband(driver.getAxis(ConfigurationService.RIGHT_X_AXIS));
 
         
 
         //Add conversions to power output based on controls here
-        // double leftPower = left_y;
-        // double rightPower = right_y;
-        double leftPower = power -turnFactor;
-        double rightPower = power + turnFactor;
+        double leftPower = left_y;
+        double rightPower = right_y;
 
         //To make sure no side go OutOfBounds with the power and crash the code (other side is divdided to keep relative power)
         if (Math.abs(leftPower) > 1)

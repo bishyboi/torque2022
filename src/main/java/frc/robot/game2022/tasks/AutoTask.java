@@ -92,7 +92,7 @@ public class AutoTask {
             case 4: // phase 4: move out
                 combine.intakeMove(intakePower);
                 //this.goTo(exitDistance, errorMargin);
-                driveTrain.drivePercentageOutput(0.15, 0.15);
+                driveTrain.drivePercentageOutput(0.05, -0.05);
             break;
         }
     }
