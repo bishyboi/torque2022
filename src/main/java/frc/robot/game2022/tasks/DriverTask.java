@@ -95,12 +95,12 @@ public class DriverTask //TODO: clean up driver task with unused code
         }
 
         //Drive the robot. Should always be last line and alone! Mostly used for debugging
-        SmartDashboard.putNumber("Left Power", -leftPower);
+        SmartDashboard.putNumber("Left Power", leftPower);
         SmartDashboard.putNumber("Right Power", rightPower);
         // SmartDashboard.putNumber("Left-Y", left_y);
         // SmartDashboard.putNumber("Right-Y", right_y);
         
-        driveTrain.drivePercentageOutput(-leftPower * powerDampener, rightPower * powerDampener);
+        driveTrain.drivePercentageOutput(leftPower * powerDampener, rightPower * powerDampener);
     }
     /**
      * Checks to see if the driver wants to slow down the drive speed of the car
