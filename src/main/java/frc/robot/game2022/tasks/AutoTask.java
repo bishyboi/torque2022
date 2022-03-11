@@ -91,7 +91,8 @@ public class AutoTask {
 
             case 4: // phase 4: move out
                 combine.intakeMove(intakePower);
-                this.goTo(exitDistance, errorMargin);
+                //this.goTo(exitDistance, errorMargin);
+                driveTrain.drivePercentageOutput(-0.4, -0.4);
             break;
         }
     }
