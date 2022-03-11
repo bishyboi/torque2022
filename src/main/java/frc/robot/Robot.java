@@ -97,7 +97,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    //auto.loop(); //TODO: Add in the loop method in AutoTask.java
+    auto.loop(); //TODO: Add in the loop method in AutoTask.java
     SmartDashboard.putNumber("X offset", camera.getxOffset());
   }
   @Override
