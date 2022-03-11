@@ -26,7 +26,7 @@ public class DriverTask //TODO: clean up driver task with unused code
     private Camera camera;
 
     // TODO: ABSOLUTELY NEEDS TUNING
-    public final double powerDampener = 1; //0-1 dampener
+    public final double powerDampener = 0.75; //0-1 dampener
     
     Clock clock;
     private final long lockoutPeriod = 500;//in milliseconds 0.001s

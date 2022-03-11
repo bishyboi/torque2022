@@ -111,10 +111,10 @@ public class Combine
         //     //return -((Combine.LIFT_SPEED) * ( (binlog( maxTicks-this.getLiftPosition() )) /LIFT_SPEED_DIVISOR));
         //  }
         if (direction > 0){
-            return 0.25;
+            return 0.60;
         }
         else if (direction < 0){
-            return -0.25;
+            return -0.60;
         } 
         else {
             return 0;

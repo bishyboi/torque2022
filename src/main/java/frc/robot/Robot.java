@@ -57,7 +57,7 @@ public class Robot extends TimedRobot {
     camera = new Camera(69, 95, 12);
     driveTrain = new DriveTrain();
     driver = new DriverTask(0, driveTrain, camera);
-    secondary = new SecondaryTask(0, arm, combine);
+    secondary = new SecondaryTask(1, arm, combine);
     auto = new AutoTask(driveTrain, camera, combine);
   }
 
@@ -108,6 +108,7 @@ public class Robot extends TimedRobot {
   /**
    * This function is called periodically during operator control.
    */
+
   @Override
   public void teleopPeriodic() {
     driver.teleop();    

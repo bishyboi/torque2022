@@ -51,7 +51,7 @@ public class AutoTask {
                     if( (camera.getSteeringAdjust(alignmentError)==0)){ // good angle: move in
                         phase++;
                     }
-                }else{ // last 7.5 secs
+                }else{ //  last 7.5 secs
                     phase = 4; // taxi out
                 }
 
