@@ -100,7 +100,7 @@ public class DriverTask //TODO: clean up driver task with unused code
         // SmartDashboard.putNumber("Left-Y", left_y);
         // SmartDashboard.putNumber("Right-Y", right_y);
         
-        driveTrain.drivePercentageOutput(leftPower * powerDampener, rightPower * powerDampener);
+        driveTrain.drivePercentageOutput(-leftPower * powerDampener, rightPower * powerDampener);
     }
     /**
      * Checks to see if the driver wants to slow down the drive speed of the car
