@@ -7,12 +7,9 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
-import frc.robot.lib.ConfigurationService;
 import frc.robot.lib.components.Camera; 
 import frc.robot.lib.components.DriveTrain;
 import frc.robot.game2022.modules.Arm;
@@ -30,10 +27,6 @@ import frc.robot.game2022.tasks.SecondaryTask;
  * project.
  */
 public class Robot extends TimedRobot {
-  private String autoSelected;
-  private final SendableChooser<String> chooser = new SendableChooser<>();
-
-
   DriverTask driver;
   SecondaryTask secondary;
   AutoTask auto;
@@ -48,12 +41,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-
-    chooser.setDefaultOption("Straight", "Straight");
-    chooser.addOption("S-Curve", "S-Curve");
-    SmartDashboard.putData("Auto Paths", chooser);
-
-
     camera = new Camera(69, 95, 12);
     driveTrain = new DriveTrain();
     driver = new DriverTask(0, driveTrain, camera);
@@ -88,17 +75,15 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    autoSelected = chooser.getSelected();
-    System.out.println("Path selected: " + autoSelected);
     camera.setDriverMode(true);
+    auto.setPhase(4);
   }
   /**
    * This function is called periodically during autonomous.
    */
   @Override
   public void autonomousPeriodic() {
-    auto.loop(); //TODO: Add in the loop method in AutoTask.java
-
+    auto.loop();
     SmartDashboard.putNumber("X offset", camera.getxOffset());
   }
   @Override
