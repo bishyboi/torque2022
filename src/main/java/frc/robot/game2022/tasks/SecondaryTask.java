@@ -17,7 +17,7 @@ public class SecondaryTask {
     This is a static amount that controls how fast each of the secondary motors will move, 
     adjust between 0.1-1.0 to speed up and slow down the power of the secondary motors
     */
-    private final double powerPercent = 0.05; //Speed of Climbing Arm //TODO: TWEAK THIS VALUE AT COMPETITION
+    private final double powerPercent = 1.5; //Speed of Climbing Arm //TODO: TWEAK THIS VALUE AT COMPETITION
     
     //Climbing Arm Parameters
     private double armLowerPower;

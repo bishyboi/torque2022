@@ -86,13 +86,6 @@ public class DriverTask //TODO: clean up driver task with unused code
         }
         //obsolete
         camera.setDriverMode(true);
-        
-        //obsolete
-        if(!driveFront)
-        {
-            leftPower = -leftPower;
-            rightPower = -rightPower;
-        }
 
         //Drive the robot. Should always be last line and alone! Mostly used for debugging
         SmartDashboard.putNumber("Left Power", leftPower);
