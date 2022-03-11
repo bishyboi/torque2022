@@ -58,7 +58,7 @@ public class AutoTask {
             break;
 
             case 2: // phase 2: move in
-                driveTrain.drivePercentageOutput(0.25, 0.25);
+                //driveTrain.drivePercentageOutput(0.25, 0.25);
                 
                 this.goTo(horizontalShootingDistance, errorMargin);
 
@@ -101,13 +101,13 @@ public class AutoTask {
      * align the robot to a reflective tape at a distance
      * @param distance distance we need to be from the reflective tape
      */
-    public void align(double error)
+    public void align(double errorMargin)
     {
         double leftPower = 0;
         double rightPower = 0;
-
-        leftPower -= camera.getSteeringAdjust(alignmentError);
-        rightPower = -leftPower;
+        double error = camera.getSteeringAdjust(alignmentError);
+        leftPower = -error;
+        rightPower = -error;
 
         SmartDashboard.putNumber("LeftPower_Autonomous", leftPower);
         SmartDashboard.putNumber("RightPower_Autonomous", rightPower);
@@ -124,11 +124,11 @@ public class AutoTask {
     {
         double drivePower = 0;
 
-        drivePower = -camera.getDistanceAdjust(distance, error);
+        drivePower = camera.getDistanceAdjust(distance, error);
 
-        SmartDashboard.putNumber("LeftPower_Autonomous", drivePower);
+        SmartDashboard.putNumber("LeftPower_Autonomous", -drivePower);
         SmartDashboard.putNumber("RightPower_Autonomous", drivePower);
 
-        driveTrain.driveVoltageOutput(drivePower, drivePower);
+        driveTrain.driveVoltageOutput(-drivePower, drivePower);
     }
 }
