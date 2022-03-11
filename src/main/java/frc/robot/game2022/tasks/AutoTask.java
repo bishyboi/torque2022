@@ -25,6 +25,7 @@ public class AutoTask {
         this.driveTrain = driveTrain;
         this.camera = camera;
         this.combine = combine;
+        this.phase = 4;
     }
 
     public void initialize() {
