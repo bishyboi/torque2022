@@ -26,7 +26,7 @@ public class DriverTask //TODO: clean up driver task with unused code
     private Camera camera;
 
     // TODO: ABSOLUTELY NEEDS TUNING
-    public final double powerDampener = 1.0; //0-1 dampener
+    public final double powerDampener = 0.25; //0-1 dampener
     
     Clock clock;
     private final long lockoutPeriod = 500;//in milliseconds 0.001s
@@ -54,6 +54,8 @@ public class DriverTask //TODO: clean up driver task with unused code
         //Reading in axes from Controller and if they're within the deadband range, it sets it to 0
         double left_y = deadband(driver.getAxis(ConfigurationService.LEFT_Y_AXIS));
         double right_y = deadband(driver.getAxis(ConfigurationService.RIGHT_Y_AXIS));
+        double right_x = deadband(driver.getAxis(ConfigurationService.RIGHT_X_AXIS));
+        double left_x = deadband(driver.getAxis(ConfigurationService.LEFT_X_AXIS));
 
         // double power = deadband(driver.getAxis(ConfigurationService.LEFT_Y_AXIS));
         // double turnFactor = deadband(driver.getAxis(ConfigurationService.RIGHT_X_AXIS));
@@ -61,8 +63,10 @@ public class DriverTask //TODO: clean up driver task with unused code
         
 
         //Add conversions to power output based on controls here
-        double leftPower = left_y;
-        double rightPower = right_y;
+        //left stick is driving, right stick is turning
+        double scaleFactor = (left_y < right_x) ? right_x : left_y; //takes whichever is bigger
+        double leftPower = (left_y + right_x)/scaleFactor;
+        double rightPower = (left_y - right_x)/scaleFactor;
 
         //To make sure no side go OutOfBounds with the power and crash the code (other side is divdided to keep relative power)
         if (Math.abs(leftPower) > 1)
