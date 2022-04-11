@@ -10,14 +10,13 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import frc.robot.lib.components.Camera; 
+import frc.robot.lib.components.Camera;
 import frc.robot.lib.components.DriveTrain;
 import frc.robot.game2022.modules.Arm;
 import frc.robot.game2022.modules.Combine;
 import frc.robot.game2022.tasks.AutoTask;
 import frc.robot.game2022.tasks.DriverTask;
 import frc.robot.game2022.tasks.SecondaryTask;
-
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -53,13 +52,13 @@ public class Robot extends TimedRobot {
    * this for items like diagnostics that you want ran during disabled,
    * autonomous, teleoperated and test.
    *
-   * <p>This runs after the mode specific periodic functions, but before
+   * <p>
+   * This runs after the mode specific periodic functions, but before
    * LiveWindow and SmartDashboard integrated updating.
    */
   @Override
-  public void robotPeriodic() 
-  {
-    
+  public void robotPeriodic() {
+
   }
 
   /**
@@ -69,7 +68,8 @@ public class Robot extends TimedRobot {
    * LabVIEW Dashboard, remove all of the chooser code and uncomment the
    * getString line to get the auto name from the text box below the Gyro
    *
-   * <p>You can add additional auto modes by adding additional comparisons to
+   * <p>
+   * You can add additional auto modes by adding additional comparisons to
    * the switch structure below with additional strings. If using the
    * SendableChooser make sure to add them to the chooser code above as well.
    */
@@ -78,6 +78,7 @@ public class Robot extends TimedRobot {
     camera.setDriverMode(true);
     auto.setPhase(4);
   }
+
   /**
    * This function is called periodically during autonomous.
    */
@@ -86,36 +87,37 @@ public class Robot extends TimedRobot {
     auto.loop();
     SmartDashboard.putNumber("X offset", camera.getxOffset());
   }
+
   @Override
-	public void teleopInit() 
-	{
+  public void teleopInit() {
     camera.setDriverMode(true);
-	}
+  }
+
   /**
    * This function is called periodically during operator control.
    */
 
   @Override
   public void teleopPeriodic() {
-    driver.teleop();    
+    driver.teleop();
     secondary.teleop();
   }
+
   /**
    * This function is called periodically during test mode.
    */
   @Override
-  public void testPeriodic()
-  {
+  public void testPeriodic() {
 
   }
+
   @Override
-	public void disabledInit()
-	{
-   
-	}
-	@Override
-	public void disabledPeriodic()
-	{
+  public void disabledInit() {
+
+  }
+
+  @Override
+  public void disabledPeriodic() {
     driveTrain.drivePercentageOutput(0, 0);
-	}
+  }
 }

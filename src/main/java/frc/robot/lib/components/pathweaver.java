@@ -16,33 +16,25 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 
-
-
-public class pathweaver
-{
+public class pathweaver {
 
   private int paths;
-  Path trajectoryPath; 
+  Path trajectoryPath;
   Trajectory trajectory;
 
-  public pathweaver()
-  {
+  public pathweaver() {
     this.initialize();
   }
 
-  private void initialize()
-  {
+  private void initialize() {
     String trajectoryJSON = "paths/YourPath.wpilib.json";
 
-    try
-    {
+    try {
       trajectoryPath = Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
       trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
-    } 
-    catch (IOException ex)
-    {
+    } catch (IOException ex) {
       DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON, ex.getStackTrace());
-    } 
+    }
   }
 
 }
