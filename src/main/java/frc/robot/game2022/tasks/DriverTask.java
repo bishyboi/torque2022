@@ -54,9 +54,9 @@ public class DriverTask // TODO: clean up driver task with unused code
         // Reading in axes from Controller and if they're within the deadband range, it
         // sets it to 0
         double left_y = deadband(driver.getAxis(ConfigurationService.LEFT_Y_AXIS));
-        double right_y = deadband(driver.getAxis(ConfigurationService.RIGHT_Y_AXIS));
+        //double right_y = deadband(driver.getAxis(ConfigurationService.LEFT_Y_AXIS));
         double right_x = deadband(driver.getAxis(ConfigurationService.RIGHT_X_AXIS));
-        double left_x = deadband(driver.getAxis(ConfigurationService.LEFT_X_AXIS));
+        //double left_x = deadband(driver.getAxis(ConfigurationService.RIGHT_X_AXIS));
 
         // double power = deadband(driver.getAxis(ConfigurationService.LEFT_Y_AXIS));
         // double turnFactor =
@@ -64,7 +64,7 @@ public class DriverTask // TODO: clean up driver task with unused code
 
         // Add conversions to power output based on controls here
         // left stick is driving, right stick is turning
-        double scaleFactor = (left_y < right_x) ? right_x : left_y; // takes whichever is bigger
+        double scaleFactor = (Math.abs(left_y) < Math.abs(right_x)) ? right_x : left_y; // takes whichever is bigger
         double leftPower = (left_y + right_x) / scaleFactor;
         double rightPower = (left_y - right_x) / scaleFactor;
 

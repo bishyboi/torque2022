@@ -75,7 +75,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    camera.setDriverMode(true);
+    camera.setDriverMode(false);
     auto.setPhase(4);
   }
 
